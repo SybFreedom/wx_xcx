@@ -1,0 +1,63 @@
+<view class="navbar">
+  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
+</view>
+<!--首页-->
+<view hidden="{{currentTab!==0}}">
+  <view class='backBox' wx:for="{{list}}">
+    <view>
+      <text>订单号：{{item[1]}}</text>
+      <text wx:if='{{item[2]!=2}}'>接单人：{{item[14]}} 电话：{{item[15]}}</text>
+      <text wx:if="{{item[10]!=null}}">接宠地址：{{item[8]}}</text>
+      <text wx:if="{{item[10]!=null}}">送宠地址：{{item[10]}}</text>
+      <text wx:if="{{item[10]==null}}">单程地址：{{item[8]}}</text>
+    </view>
+    <view>
+      <view wx:if='{{item[2]==2}}'>
+        <view style='background-color:#77cc77'></view>
+        <text style='color:#77cc77'>待接单</text>
+      </view>
+      <view wx:if='{{item[2]==7}}'>
+        <view style='background-color:#006cff'></view>
+        <text style='color:#006cff'>上门接送</text>
+      </view>
+      <view wx:if='{{item[2]==10}}'>
+        <view style='background-color:#ff6a28'></view>
+        <text style='color:#ff6a28'>已到店面</text>
+      </view>
+      <view wx:if='{{item[2]==11||item[2]==12}}'>
+        <view style='background-color:#cc2ce9'></view>
+        <text style='color:#cc2ce9'>服务中</text>
+      </view>
+      <view wx:if='{{item[2]==13}}'>
+        <view style='background-color:#00ae08'></view>
+        <text style='color:#00ae08'>待接回</text>
+      </view>
+      <view wx:if='{{item[2]==3||item[2]==8||item[2]==6||item[2]==9||item[2]==4||item[2]==5}}'>
+        <view style='background-color:#222'></view>
+        <text style='color:#222'>已完成</text>
+      </view>
+    </view>
+    <view data-id="{{item[0]}}" bindtap='godetails'>查看详情</view>
+    <view data-id="{{item[0]}}" bindtap='goDelete'>取消订单</view>
+  </view>
+</view>
+
+<!--搜索-->
+<view hidden="{{currentTab!==1}}">
+  <view class='backBox' wx:for="{{list2}}">
+    <view>
+      <text>订单号：{{item[1]}}</text>
+      <text wx:if='{{item[2]!=2}}'>接单人：{{item[14]}} 电话：{{item[15]}}</text>
+      <text wx:if="{{item[10]!=null}}">接宠地址：{{item[8]}}</text>
+      <text wx:if="{{item[10]!=null}}">送宠地址：{{item[10]}}</text>
+      <text wx:if="{{item[10]==null}}">单程地址：{{item[8]}}</text>
+    </view>
+    <view style='opacity:0'>
+      <view>
+        <view style='background-color:#77cc77'></view>
+        <text style='color:#77cc77'>商家待接单</text>
+      </view>
+    </view>
+    <view data-id="{{item[0]}}" bindtap='godetails'>查看详情</view>
+  </view>
+</view>

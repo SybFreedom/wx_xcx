@@ -1,0 +1,124 @@
+<!-- <view bindtap='jumpMini'>跳转小程序</view> -->
+<!-- <view class='cardWrap' style='width:{{windowWidth}}px; height:{{windowHeight}}px; display:none'>
+  <view>
+    <image src='/images/dianjilingqu.png' mode='widthFix' bindtap='getEventCards'></image>
+    <image src='/images/shouye.png' mode='widthFix'></image>
+    <image src='/images/close.png' mode='widthFix' bindtap='cardHide'></image>
+  </view>
+</view> -->
+
+
+
+<view wx:if="{{hasUserInfo && hasLocation}}">
+  <view class="home_topBGView">
+    <view class='row'>
+      <view class="home_addressBGView" catchtap="addressclick">
+        <image src="../../images/locationIcon.png" class="addressIcon">
+        </image>
+        <text class="addressText">{{userLocationAddress.temName}}</text>
+      </view>
+      <!-- <view class='logBgView'>
+        <image class='homeLogo' src='../../images/logo.png'></image>
+      </view> -->
+    </view>
+
+  </view>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" indicator-color="#{{indicatorColor}}" indicator-active-color="#{{indicatorActiveColor}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+      <swiper-item>
+        <image src="{{item.img}}" catchtap="bannerClick" data-index="{{index}}" data-banneritem="{{item}}" class="slide-image"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+
+
+  <view class="flex-wrp flex-row" style="flex-wrap:wrap">
+    <view class="searchBt" bindtap="bindButtonTap">
+      <image src='../../images/fang.png' style='width:34rpx;vertical-align: middle;' mode='widthFix'></image>
+      请输入商家名称
+    </view>
+    <!-- <view class='itemWrap'>
+      <view id="123" class="flex-item" catchtap="funcmenuClick" data-url="{{item.url}}" data-title="{{item.name}}" wx:for="{{funcmenulist}}" wx:key="{{index}}">
+        <image class="funmenuimage" src="{{item.icon}}" mode="widthFix"></image>
+        <text class="funmenuText">{{item.name}}</text>
+      </view>
+    </view> -->
+  </view>
+
+  <view class='recomdShop' style="display:none">
+    <!-- 横向滑动列表 -->
+    <view class='title'>
+      <view>
+        <image src='/images/good_business.png'></image>
+        <text>精选商家与活动</text>
+      </view>
+      <view bindtap='goMore'>
+        <text>更多</text>
+        <image src='/images/more_03.png' mode='widthFix'></image>
+      </view>
+    </view>
+    <scroll-view scroll-x class="scroll-x" bindscrolltolower="loadList">
+      <view wx:for="{{hotShopList}}" wx:key="{{index}}" class="view-parent">
+        <view data-item="{{item.id}}" bindtap="bunessItemClick">
+          <image src='{{item.logo}}'></image>
+          <text>{{item.name}}</text>
+          <text>综合评分：{{item.grade}}</text>
+          <text>{{item.sysNotice}}</text>
+          <view>
+            <view>
+              <text class='backred'>月销</text>
+              <text>{{item.orderCount}}单</text>
+            </view>
+            <text>{{item.distance}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+
+  <!-- <view class='listHeahderView'>
+    <image class='headerImgView' src='../../images/good_business.png'></image>
+    <text class="headerText">所有商家</text>
+  </view> -->
+  
+  <view class='shopBox' wx:for="{{items}}" wx:key="{{item.itemid}}" data-item="{{item.id}}" bindtap="bunessItemClick" data-status="{{item.status}}">
+    <image lazy-load="true" src="{{item.logo}}"></image>
+    <image wx:if="{{item.joinCommonWeal==1}}" lazy-load="true" src="/images/gongyi.png" mode="widthFix"></image>
+    <view>
+      <text>{{item.name}}</text>
+      <view>
+        <image src='/images/star.png'></image>
+        <text>{{item.grade}}分</text>
+        <text>月售{{item.orderCount}}单</text>
+      </view>
+      <text>{{item.sysNotice}}</text>
+      <view>
+        <view wx:for="{{item.couponUserVOList}}">{{item.couponName}}</view>
+      </view>
+    </view>
+    <text>{{item.distance}}</text>
+  </view>
+  <view class="com-widget-goTop" bindtap="goTop" wx:if="{{floorstatus}}">
+    <image src='/images/goTop.png'></image>
+    <view class="icon-gotop">
+      顶部
+    </view>
+  </view>
+</view>
+
+
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:if="{{!hasLocation}}">
+  <icon type="info" size="93"></icon>
+
+  <view class="alertTitle">【养宠有道】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击"允许地理位置授权"按钮，然后将地理位置授权开启，重新进入小程序即可正常使用</view>
+  <button open-type='openSetting' style="margin-top:50rpx;">允许地理位置授权</button>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:elif="{{!hasUserInfo}}">
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【养宠有道】程序获取您的用户信息将更好的为您服务,如果不小心拒绝授权之后,请点击"允许用户信息授权"按钮，然后将用户信息授权开启，重新进入小程序即可正常使用</view>
+  <button open-type='openSetting' style="margin-top:50rpx;">允许用户信息授权</button>
+</view>

@@ -1,0 +1,343 @@
+var app = getApp();
+var txmap = require('../../libs/map/qqmap-wx-jssdk.min.js');
+var tools = require('../../utils/util.js');
+const clientApi = require('../../utils/clientApi.js').clientApi
+
+var wxMarkerData = []; //定位成功回调对象  
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    maxAddressCount: 4,
+    hasLocation: true,
+    hasUserInfo: true,
+    ak: app.globalData.txMapak,
+    userLocationAddress: {},
+    isLoadMore: true,
+    pageIndex: 1,
+    pageSize: 6,
+    totalPage: 100,
+    windowHeight: 0,
+    windowWidth: 0,
+    // 功能菜单
+    funcmenulist: [
+      {
+        id: 5,
+        name: '宠物接送',
+        icon: '/images/icon_11.png'
+      },
+      {
+        id: 1,
+        name: '宠物百货',
+        icon: '/images/icon_03.png'
+      },
+      {
+        id: 3,
+        name: '宠物活体',
+        icon: '/images/icon_07.png'
+      },
+      {
+        id: 4,
+        name: '宠物健康',
+        icon: '/images/icon_09.png'
+      },
+      {
+        id: 2,
+        name: '宠物百科',
+        icon: '/images/icon_05.png'
+      },
+    ],
+    items: [],
+    imgUrls: [],
+    indicatorDots: false,
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    indicatorColor: 'ececec',
+    indicatorActiveColor: 'ffd33a'
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    console.log('mao::::', app.userId)
+    this.setData({
+      windowHeight: app.windowHeight,
+      windowWidth: app.windowWidth
+    })
+  },
+
+  getBanner: function() {
+    clientApi.getBanner().then(d => {
+      console.log(d)
+      this.setData({
+        imgUrls: d.data
+      })
+    })
+  },
+
+
+  getPermiss: function() {
+    var _this = this;
+    _this.setData({
+      hasUserInfo: true
+    })
+
+    if (_this.data.items.length == 0) {
+      _this.getHomeData();
+    } else {
+      if (app.globalData.userLocationAddress.name != _this.data.userLocationAddress.name) {
+        _this.setAddress();
+        if (_this.data.userLocationAddress.adcode != '' && _this.data.userLocationAddress.adcode != undefined) {
+          _this.refresh();
+        };
+      }
+    }
+  },
+
+  setAddress: function() {
+    var address = app.globalData.userLocationAddress;
+    var maxCount = this.data.maxAddressCount;
+    if (address.name.length > maxCount) {
+      address.temName = address.name.substring(0, maxCount) + "...";
+    } else {
+      address.temName = address.name;
+    }
+
+    this.setData({
+      userLocationAddress: address
+    });
+  },
+
+  getHomeData: function() {
+
+    var _this = this;
+    if (app.globalData.userLocationAddress.city != '') {
+      _this.setAddress();
+      _this.refresh();
+    } else {
+      this.postionUserLocation();
+    }
+  },
+
+  getModules: function() {
+    // var _this = this;
+    //   clientApi.getModules().then(d => {
+    //     _this.setData({
+    //       funcmenulist: d.data
+    //     })
+    //     console.log(_this.data.funcmenulist);
+    //   });
+
+
+  },
+
+  /**
+   * 定位&获取商家商家列表
+   */
+  postionUserLocation: function() {
+    var that = this;
+
+    var QQMapWX = txmap;
+
+    var demo = new QQMapWX({
+      key: that.data.ak
+    });
+
+    demo.reverseGeocoder({
+      success: function(res) {
+        var res = res.result;
+        app.globalData.userLocationAddress.city = res.ad_info.city;
+        app.globalData.userLocationAddress.provinces = res.ad_info.province;
+        app.globalData.userLocationAddress.district = res.ad_info.district;
+        app.globalData.userLocationAddress.name = tools.formatNullObj(res.address_component.district) + tools.formatNullObj(res.address_reference.landmark_l2.title) + '(' + tools.formatNullObj(res.address_reference.street.title) + '附近' + tools.formatNullObj(res.address_reference.street._distance) + '米)';
+        app.globalData.userLocationAddress.location = res.location;
+        app.globalData.userLocationAddress.adcode = res.ad_info.adcode;
+
+        that.setAddress();
+        that.refresh();
+      }
+    });
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    this.getPermiss();
+    this.getModules();
+    this.getBanner();
+  },
+
+  refresh: function(isShowToast) {
+    if (isShowToast == true) {
+      wx.showToast({
+        title: '下拉刷新'
+      })
+    }
+    this.setData({
+      pageIndex: 1,
+      isLoadMore: false
+    })
+
+    this.apiGetBunessList(this.data.pageSize, this.data.pageIndex);
+  },
+
+  loadMore: function() {
+    var that = this;
+    if (!that.data.isLoadMore) {
+      return
+    };
+    that.data.isLoadMore = false;
+    that.apiGetBunessList(this.data.pageSize, this.data.pageIndex);
+  },
+
+  apiGetBunessList: function(pageSize, pageIndex) {
+    if (pageIndex > this.data.totalPage) {
+      return
+    };
+
+    if (pageIndex != 1) {
+      if (wx.canIUse('showLoading')) {
+        wx.showLoading({
+          title: '加载更多数据中。。。'
+        });
+      }
+    }
+    var _this = this;
+    console.log("l::::::::::::::::::::::::::::::", _this.data.userLocationAddress.location.lng)
+    console.log("l::::::::::::::::::::::::::::::", _this.data.userLocationAddress.location.lat)
+    console.log("l::::::::::::::::::::::::::::::", _this.data.userLocationAddress.adcode)
+    clientApi.getShop({
+      currPage: pageIndex,
+      isRecom: 1,
+      pageSize: _this.data.pageSize,
+      lng: _this.data.userLocationAddress.location.lng,
+      lat: _this.data.userLocationAddress.location.lat,
+      areaCode: _this.data.userLocationAddress.adcode
+    }).then(d => {
+      var datas = _this.data.items;
+      if (d.data != null) {
+        if (pageIndex == 1) {
+          _this.setData({
+            totalPage: d.data.totalPage
+          })
+          datas = d.data.data;
+        } else {
+          datas = datas.concat(d.data.data);
+        }
+
+        if (d.data.data.count < pageSize) {
+          _this.setData({
+            isLoadMore: false
+          })
+        } else {
+          _this.setData({
+            isLoadMore: true,
+            pageIndex: _this.data.pageIndex += 1,
+          })
+        }
+
+        _this.setData({
+          items: datas
+        })
+      } else {
+        _this.setData({
+          items: []
+        })
+
+      }
+      wx.hideNavigationBarLoading();
+      if (wx.canIUse('hideLoading')) {
+        wx.hideLoading();
+      }
+      console.log(this.data.items);
+    });
+  },
+
+  //切换定位
+  addressclick: function(event) {
+    wx.navigateTo({
+      url: "../../pages/chooseArea/chooseArea?type=1",
+      success: function(res) {
+
+      }
+    })
+  },
+
+  //搜索商家列表
+  bindButtonTap: function() {
+    wx.navigateTo({
+      url: '../../pages/searchBunessList/searchBunessList',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  // 商家类别
+  funcmenuClick: function(event) {
+    if (event.currentTarget.dataset.itemid == 2) {
+      wx.navigateTo({
+        url: '/pages/ency/ency',
+      })
+    }else if (event.currentTarget.dataset.itemid == 5) {
+      wx.setStorage({
+        key: 'orderType',
+        data: '4',
+      })
+      wx.navigateTo({
+        url: '../../pages/submitOrder/submitOrder',
+      })
+    } else {
+      wx.navigateTo({
+        url: '../../pages/bunessList/bunessList?id=' + event.currentTarget.dataset.itemid + '&title=' + event.currentTarget.dataset.title,
+        success: function(res) {},
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+    }
+    
+
+  },
+
+  //商家item
+  bunessItemClick: function(event) {
+    let str = JSON.stringify(event.currentTarget.dataset.item);
+    wx.navigateTo({
+      url: '/pages/shop/shop?item=' + str
+    })
+  },
+
+  //banner点击
+  bannerClick: function(e) {
+
+    let banneritem = e.currentTarget.dataset.banneritem;
+    if (banneritem.actionType == 2 && banneritem.actionVal != null && banneritem.actionVal != '') {
+      wx.navigateTo({
+        url: '/pages/shop/shop?shopId=' + banneritem.actionVal
+      })
+    }
+
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  }
+
+})

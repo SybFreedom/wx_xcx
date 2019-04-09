@@ -1,0 +1,127 @@
+const clientApi = require('../../utils/clientApi.js').clientApi
+var app = getApp();
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    chooseType:'',
+    windowHeight: 0,
+    windowWidth: 0,
+    list: []
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+      this.setData({
+        chooseType: options.chooseType
+      })
+      var _this = this;
+      clientApi.getUserAddress({userId:app.userId}).then(d => {
+        console.log(d);
+        _this.setData({
+          list: d.data
+        })
+      })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    wx.getSystemInfo({
+      success: (res) => {
+        this.setData({
+          windowHeight: res.windowHeight - 50,
+          windowWidth: res.windowWidth
+        })
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+  addNewOrEditorAddress: function(){
+    wx.redirectTo({
+      url: '../../pages/addNewOrEditorAddress/addNewOrEditorAddress?id=1',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+
+  editor: function (e){
+    let dataItem = this.data.list[e.currentTarget.dataset.index];
+    let jsonObject = dataItem;
+    let str = JSON.stringify(jsonObject);
+    wx.redirectTo({
+      url: '../../pages/addNewOrEditorAddress/addNewOrEditorAddress?data=' + str,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
+  chooseItem: function (e){
+    if (this.data.chooseType == 1) {
+      let dataItem = this.data.list[e.currentTarget.dataset.index];
+      app.globalData.shippingAddress = dataItem;
+      wx.navigateBack({
+        delta: 1,
+      })
+    }else if(this.data.chooseType == 10){
+      //此时选择的是送宠地址
+      let dataItem = this.data.list[e.currentTarget.dataset.index];
+      app.globalData.sshippingAddress = dataItem;
+      wx.navigateBack({
+        delta: 1,
+      })
+
+    }
+  }
+})

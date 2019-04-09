@@ -1,0 +1,112 @@
+.Tab{
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-bottom: 1rpx solid #f1f1f1;
+}
+.Tab>view{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 60rpx;
+}
+.Tab>view:first-of-type{
+  border-right: 1rpx solid #f1f1f1;
+}
+.Tab>view:last-of-type{
+  border-left: 1rpx solid #f1f1f1;
+}
+.Tab>view>text{
+  font-size: 12pt;
+  color: #333333;
+  width: 100rpx;
+  text-align: center;
+  padding: 10rpx 0;
+  border-bottom-width: 5rpx;
+  border-bottom-style: solid;
+}
+page {
+  background-color: white;
+}
+
+.container{
+  min-height: 100%;
+}
+.touch-item{
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom:1px solid #F1F1F1;
+  width: 100%;
+  overflow: hidden
+}
+.content{
+  width: 100%;
+  padding: 10px;
+  margin-right:0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  margin-left: -90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.content>image{
+  width: 220rpx;
+  height: 160rpx;
+}
+.content>view{
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+
+}
+.content>view>text:first-of-type{
+  font-size: 11pt;
+  color: #000;
+}
+.content>view>text:nth-of-type(2){
+  font-size: 12pt;
+  color: red;
+  line-height: 50rpx;
+}
+.content>view>text:last-of-type{
+  font-size: 10pt;
+  color: #666
+}
+.del{
+  background-color: orangered;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  -webkit-transform: translateX(90px);
+  transform: translateX(90px);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.touch-move-active .content,.touch-move-active .del {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+.empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx;
+}
+.empty>image{
+  width: 45%;
+  margin-bottom: 20rpx;
+}
+.empty>text{
+  font-size: 12pt;
+  color: #333333;
+}

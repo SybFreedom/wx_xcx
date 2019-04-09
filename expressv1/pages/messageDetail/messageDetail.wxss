@@ -1,0 +1,8 @@
+/* pages/messageDetail/messageDetail.wxss */
+view{
+  font-size: 28rpx;
+  text-indent: 56rpx;
+  margin-left: 10rpx;
+  width: 730rpx;
+  margin-top: 25rpx
+}

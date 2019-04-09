@@ -1,0 +1,9 @@
+<view class='containter'>
+  <view class='content'>
+    <image src='{{shopmsg.icon}}'></image>
+    <text>{{shopmsg.name}}</text>
+    <view bindtap='gotel' data-tel="{{shopmsg.tel}}">
+      <text>{{shopmsg.tel}}</text>
+    </view>
+  </view>
+</view>

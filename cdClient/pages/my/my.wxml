@@ -1,0 +1,90 @@
+<view>
+  <view class="topView">
+    <image src='/images/Back_01.png' class='backimg' mode='widthFix'></image>
+    <view class='userinfoview'>
+      <image class="userIcon" src="{{userInfo.avatarUrl}}"></image>
+      <view class="userName">{{userInfo.nickName}}</view>
+      <text class='points'>积分：{{userPoints}}</text>
+    </view>
+    <view class='msg' bindtap='goMsgList'>
+      <image src='/images/msg_Icon.png' mode='widthFix'></image>
+      <text>消息</text>
+      <view wx:if="{{msgCount!=0}}">{{msgCount}}</view>
+    </view>
+  </view>
+  <!-- <image src='/images/Back_02.png' class='guanggao' mode='widthFix'></image> -->
+  <view class="list">
+    <view class="item" catchtap="giftClick">
+      <view>
+        <image src='/images/meicon_08.png' mode='widthFix'></image>
+        <text>礼包购买</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+    <view class='item' bindtap='goprice'>
+      <view>
+        <image src='/images/meicon_03.png' mode='widthFix'></image>
+        <text>钱包</text>
+      </view>
+      <view>
+        <text>￥{{userMoney}}</text>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+
+    <view class="item" catchtap="mycardClick">
+      <view>
+        <image src='/images/cardicon_03.png' mode='widthFix'></image>
+        <text>卡包</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+
+    <view class="item" catchtap="myCollectionClick">
+      <view>
+        <image src='/images/cardicon_03.png' mode='widthFix'></image>
+        <text>我的收藏</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+
+    <view class="item" catchtap="myAddressClick">
+      <view>
+        <image src='/images/meicon_06.png' mode='widthFix'></image>
+        <text>收货地址</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+    <view class="item" catchtap="serviceClick">
+      <view>
+        <image src='/images/meicon_08.png' mode='widthFix'></image>
+        <text>服务中心</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+    
+  </view>
+</view>
+
+<!-- <view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:if="{{!hasLocation}}">
+  <icon type="info" size="93"></icon>
+  
+  <view class="alertTitle">【养宠有道】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击"允许地理位置授权"按钮，然后将地理位置授权开启，重新进入小程序即可正常使用</view>
+  <button open-type='openSetting' style="margin-top:50rpx;">允许地理位置授权</button>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:elif="{{!hasUserInfo}}">
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【养宠有道】程序获取您的用户信息将更好的为您服务,如果不小心拒绝授权之后,请点击"允许用户信息授权"按钮，然后将用户信息授权开启，重新进入小程序即可正常使用</view>
+  <button open-type='openSetting' style="margin-top:50rpx;">允许用户信息授权</button>
+</view> -->

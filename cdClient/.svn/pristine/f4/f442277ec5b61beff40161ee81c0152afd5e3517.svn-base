@@ -1,0 +1,150 @@
+<!--pages/orderDetail/orderDetail.wxml-->
+<view class="container">
+	<!-- <view class="header {{scrollDown?'hidden':''}}">
+		<image class="logo" src="{{item.logo}}"/>
+		<view class="name ellipsis">{{item.name}}</view>
+    <view class="distributionPrice" bindtap="callTel">联系电话:{{item.tel}}</view>
+    <view class="distributionPrice">配送费:￥{{item.servicePrice}}元</view>
+		<view class="welcome">公告：{{item.des}}</view>
+   </view>  -->
+  <view class='address'>
+    <view>
+      <view>
+        <image src='/images/orderIcon_03.png' mode='widthFix'></image>
+        <text>接宠</text>
+      </view>
+      <view>
+        <text>{{item.address}}</text>
+        <text decode="{{true}}" space="{{true}}">{{item.userName}}&nbsp;&nbsp;{{item.phone}}</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/orderIcon_09.png' mode='widthFix'></image>
+        <text>送宠</text>
+      </view>
+      <view>
+        <text>{{item.address}}</text>
+        <text decode="{{true}}" space="{{true}}">{{item.userName}}&nbsp;&nbsp;{{item.phone}}</text>
+      </view>
+    </view>
+  </view>
+  <view class='time'>
+    <view>
+      <text>接宠时间</text>
+      <view>
+        <view>
+          <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+        </view>
+        <text>2018-07-07  10:30</text>
+      </view>
+    </view>
+    <view>
+      <text>送宠时间</text>
+      <view>
+        <view>
+          <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+        </view>
+        <text>2018-07-07  10:30</text>
+      </view>
+    </view>
+  </view>
+  <view class='shopmessage'>
+    <view>
+      <view>
+        <image src='{{item.logo}}' mode='widthFix'></image>
+        <text>{{item.shopName}}</text>
+      </view>
+      <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+
+    <view class='shopitem' wx:for="{{item.goodsList}}" wx:key="{{index}}">
+      <image src='{{item.icon}}' mode='widthFix'></image>
+      <view>
+        <text>{{item.goodsName}}</text>
+        <text>￥{{item.price}}</text>
+        <text>x{{item.count}}</text>
+      </view>
+    </view>
+
+    <text class='zjtxt'>追加订单</text>
+
+    <view class='zjshopitem'>
+      <image src='/images/testImg_03.png' mode='widthFix'></image>
+      <view>
+        <text>洗澡全套5kg以下（不含上门接送服务费）</text>
+        <text>￥50</text>
+        <text>x1</text>
+      </view>
+    </view>
+
+    <view class='shopprice'>
+      <view>
+        <text>配送费</text>
+        <text>￥5</text>
+      </view>
+      <view>
+        <text>首单减免</text>
+        <text>￥0</text>
+      </view>
+      <view>
+        <text>订单总价</text>
+        <text>￥{{item.servicePrice}}</text>
+      </view>
+    </view>
+    <view class='payprice'>
+      <view>
+        <text>实付款：</text>
+        <text>￥{{item.servicePrice}}</text>
+      </view>
+      
+    </view>
+
+
+  </view>
+  <view class='ordermessage'>
+    <view>
+      <text decode="{{true}}" space="{{true}}">订单编号&nbsp;{{item.orderNo}}</text>
+      <text decode="{{true}}" space="{{true}}">交易时间&nbsp;{{item.createTime}}</text>
+      <text decode="{{true}}" space="{{true}}">付款时间&nbsp;2018-07-07  10:30</text>
+    </view>
+    <text>备注</text>
+    <text>{{item.note}}</text>
+    <view>
+      <text bindtap='gocontact'>联系卖家</text>
+      <text>追加商品</text>
+      <text bindtap='gopsdetails'>查看配送员</text>
+    </view>
+  
+  </view>
+
+
+
+</view>
+
+<!-- <scroll-view class="goodsListView" scroll-y="true">
+
+    <view class="goodsItemView" wx:for="{{item.goodsList}}" wx:for-item="goodsItem" wx:key="*this"> 
+      <view class="goodsItemText1">{{goodsItem.goodsName}}</view>
+      <view class="goodsItemText2">x {{goodsItem.count}}</view>
+     <view class="goodsItemText3">￥{{goodsItem.price}}</view>
+    </view>
+    
+    <view class="cutView"></view>
+
+    <view class="goodsItemView">
+      <view class="goodsItemText1">配送费</view>
+     <view class="goodsItemText3">￥{{item.servicePrice}}</view>
+    </view>
+    <view class="cutView"></view>
+    <view class="orderState">订单状态:{{item.orderStatusStr}}</view>
+    <view wx:if="{{item.note}}">
+      <view class="note">用户留言:</view>
+      <textarea disabled="true" value="{{item.note}}" class="noteArea" />
+    </view>
+    <view wx:if="{{item.refuseNote}}">
+      <view class="note" >商家退单理由:</view>
+      <textarea disabled="true" value="{{item.refuseNote}}" class="noteArea"/>
+    </view>
+    
+  </scroll-view> -->

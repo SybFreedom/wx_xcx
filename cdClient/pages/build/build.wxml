@@ -1,0 +1,4 @@
+<view class='containter'>
+  <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+  <text>{{title}}暂未开放</text>
+</view>

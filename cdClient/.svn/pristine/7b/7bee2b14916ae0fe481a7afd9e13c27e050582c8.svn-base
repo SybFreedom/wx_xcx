@@ -1,0 +1,85 @@
+<!--pages/goodsDetail/goodsDetail.wxml-->
+
+<view>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" indicator-color="#{{indicatorColor}}" indicator-active-color="#{{indicatorActiveColor}}" interval="{{interval}}" duration="{{duration}}" class='swiper'>
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item.img}}" catchtap="bannerClick" data-banneritem="{{item}}" class="slide-image"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- <image class='goodsImg' src="{{item.icon}}"></image> -->
+  <!-- <view class='goodsName'>{{item.name}}</view>
+  <view class='goodsSell'>月销量：{{item.sellCount}}</view>
+  <view class='goodsPrice'>￥：{{item.price}}</view>
+  <view class='goodsDes'>产品描述:</view> -->
+  <view class='shopmsg'>
+    <view>
+      <view>
+        <text>￥{{item.price}}</text>
+        <view>
+          <text>价格</text>
+          <text>￥10</text>
+        </view>
+      </view>
+      <view bindtap='goback'>
+        <image src='/images/ic_shop.png' mode='widthFix'></image>
+        <text>店铺</text>
+      </view>
+    </view>
+    <view>
+      <text>{{item.name}}</text>
+    </view>
+    <view>
+      <text>配送费￥5</text>
+      <text>销量{{item.sellCount}}</text>
+      <text>距离1.2km</text>
+    </view>
+  </view>
+
+  <view class='shopdetails'>
+    <view>
+      <image src='/images/ic_product_description.png' mode='widthFix'></image>
+      <text>产品描述</text>
+    </view>
+    <view>
+      <import src="../../libs/wxParse/wxParse.wxml"/> 
+      <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+    </view>
+  </view>
+
+<view class='begin' bindtap='goshow'>
+  <text>立即购买</text>
+</view>
+<view class='wrap' style="display:{{isshow?'block':'none'}}" >
+  <view bindtap='gohide'></view>
+  <view>
+    <view>
+      <view></view>
+      <text>选择购买数量</text>
+      <view></view>
+    </view>
+    
+    <view>
+      <image src='/images/goodsReduce.png' mode='widthFix' data-f="-" bindtap='gonum'></image>
+      <text>{{num}}</text>
+      <image src='/images/goodsAdd.png' data-f="+" bindtap='gonum' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <image src='/images/shopCaricon_03.png' mode='widthFix'></image>
+        <view>
+          <text>￥{{item.price*num}}</text>
+          <text>含配送费￥5.00</text>
+        </view>
+      </view>
+      <view bindtap='goorder'>
+        <text>提交订单</text>
+      </view>
+    </view>
+  </view>
+</view>
+  
+</view>
+
+

@@ -1,0 +1,56 @@
+<!--pages/psdetails/psdetails.wxml-->
+<view class='containter'>
+  <view class='header'>
+    <view>
+      <image src='/images/ic_courier.png' mode='widthFix'></image>
+      <view>
+        <text wx:if="{{pstel!=null}}">{{psname}}</text>
+        <text wx:if="{{pstel!=null}}">{{pstel}}</text>
+        <text wx:if="{{pstel==null}}">配送员马上为您接单，请稍后哟</text>
+      </view>
+    </view>
+    <image src='/images/btn_express_telephone.png' mode='widthFix' bindtap='gotel' data-tel="{{pstel}}"></image>
+  </view>
+  <view class='kdmessage'>
+    <view>
+      <image src='/images/ic_transport.png' mode='widthFix'></image>
+      <text>当前配送信息</text>
+    </view>
+    <view>
+      <view class='line'>
+        <view wx:if="{{orderStatus==7}}" style='width:0%'></view>
+        <view wx:if="{{orderStatus==10}}" style='width:33%'></view>
+        <view wx:if="{{orderStatus==13}}" style='width:66%'></view>
+        <view wx:if="{{orderStatus==3 || orderStatus==6 || orderStatus==8}}" style='width:99%'></view>
+      </view>
+
+      <view>
+        <text>接到宠物</text>
+        <image src='/images/btn_fine_green_selected.png' wx:if="{{orderStatus==7 || orderStatus==10 || orderStatus==13 || orderStatus==3 || orderStatus==6 || orderStatus==8}}" mode='widthFix'></image>
+        <image src='/images/btn_gray_normal_one.png' wx:else mode='widthFix'></image>
+      </view>
+      <view>
+        <text>送达商家</text>
+        <image src='/images/btn_fine_green_selected.png' wx:if="{{orderStatus==10 || orderStatus==13 || orderStatus==3 || orderStatus==6 || orderStatus==8}}" mode='widthFix'></image>
+        <image src='/images/btn_gray_normal_two.png' wx:else mode='widthFix'></image>
+      </view>
+      <view>
+        <text>送宠回家</text>
+        <image src='/images/btn_fine_green_selected.png' wx:if="{{orderStatus==13 || orderStatus==3 || orderStatus==6 || orderStatus==8}}" mode='widthFix'></image>
+        <image src='/images/btn_gray_normal_three.png' wx:else mode='widthFix'></image>
+      </view>
+      <view>
+        <text>完成订单</text>
+        <image src='/images/btn_fine_green_selected.png' wx:if="{{orderStatus==3 || orderStatus==6 || orderStatus==8}}" mode='widthFix'></image>
+        <image src='/images/btn_gray_normal_four.png' wx:else mode='widthFix'></image>
+      </view>
+    </view>
+  </view>
+  <view class='map'>
+    <text>查看宠物距离</text>
+    <view>
+      <map id="map" longitude="113.324520" latitude="23.099994" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location>
+      </map>
+    </view>
+  </view>
+</view>

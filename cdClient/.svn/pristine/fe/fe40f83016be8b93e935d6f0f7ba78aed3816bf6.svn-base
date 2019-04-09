@@ -1,0 +1,53 @@
+<view wx:if="{{hasUserInfo && hasLocation}}">
+  <view class="topView">
+    <image src='/images/Back_01.png' class='backimg' mode='widthFix'></image>
+    <view class='userinfoview'>
+      <image class="userIcon" src="{{userInfo.avatarUrl}}"></image>
+      <view class="userName">{{userInfo.nickName}}</view>
+    </view>
+    
+  </view>
+  <!-- <image src='/images/Back_02.png' class='guanggao' mode='widthFix'></image> -->
+  <view class="list">
+    <view class='item' bindtap='goprice'>
+      <view>
+        <image src='/images/meicon_03.png' mode='widthFix'></image>
+        <text>余额</text>
+      </view>
+      <view>
+        <text>￥00.00</text>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+      
+    </view>
+
+    <view class="item" catchtap="myAddressClick">
+      <view>
+        <image src='/images/meicon_06.png' mode='widthFix'></image>
+        <text>收货地址</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+    <view class="item" catchtap="serviceClick">
+      <view>
+        <image src='/images/meicon_08.png' mode='widthFix'></image>
+        <text>服务中心</text>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:if="{{!hasLocation}}">
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【宠物之家】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:elif="{{!hasUserInfo}}">
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【宠物之家】程序获取您公开的的个人信息,将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>

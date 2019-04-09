@@ -1,0 +1,98 @@
+<view class='container'>
+  <text wx:if="{{item[0]}}">优惠券详情</text>
+  <view class='details' wx:if="{{item[0]}}">
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>优惠说明</text>
+      </view>
+      <view>
+        <text>{{item[3]}}</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>有效时间</text>
+      </view>
+      <view>
+        <text>{{item[6]}}——{{item[7]}}</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>可用时段</text>
+      </view>
+      <view>
+        <text>周一到周日，全天可用</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>使用须知</text>
+      </view>
+      <view>
+        <text>无门槛抵用券，进入小程序使用</text>
+      </view>
+    </view>
+  </view>
+
+  <text wx:if="{{Gift.id}}">大礼包详情</text>
+  <view class='details' wx:if="{{Gift.id}}">
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>礼包说明</text>
+      </view>
+      <view>
+        <text>{{Gift.description}}</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>有效时间</text>
+      </view>
+      <view>
+        <text>{{Gift.startdate}}——{{Gift.enddate}}</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>可用时段</text>
+      </view>
+      <view>
+        <text>周一到周日，全天可用</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>使用须知</text>
+      </view>
+      <view>
+        <text>无门槛抵用券，进入小程序使用</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>包含优惠券</text>
+      </view>
+    </view>
+
+    <block wx:for="{{Gift.packagecardlist}}" wx:key="{{index}}">
+      <view class='giftDetails'>
+        <text>{{item.comment}}{{item.amount}}张</text>
+      </view>
+    </block>
+      
+    
+
+  </view>
+
+
+</view>

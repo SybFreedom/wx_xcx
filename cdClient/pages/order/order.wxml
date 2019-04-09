@@ -1,0 +1,107 @@
+<view class='topBar'>
+  <view bindtap='topBarTap' data-index="{{index}}" wx:for="{{tabItems}}" style="border-bottom-color:{{item.isActive==1?'#ffd33a':'white'}};color:{{item.isActive==1?'#ffd33a':'#666'}}">{{item.title}}</view>
+</view>
+<view class='emptyOrder' wx:if="{{orderList==''}}">
+  <view>
+    <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+    <text>干干净净，你的宠物在召唤您哟~</text>
+    <text>快去购买服务或商品吧！</text>
+  </view>
+</view>
+<view wx:if="{{orderList!=''}}" class='wwrap'>
+  <view class="secitonView" wx:for="{{orderList}}" wx:key="{{index}}" wx:for-item="orderListItem" catchtap="orderDeitailClick" data-orderitem="{{orderListItem}}">
+    <view class="headerView">
+      <view class="headerLeftView">
+        <image class="headerIcon" src="{{orderListItem.logo}}"></image>
+        <text>{{orderListItem.shopName}}</text>
+
+        <!-- <view class="nameAndOrderNumber">
+                  <view class="headerName">{{orderListItem.shopName}}</view>
+                  <view class="headerOrderNum">订单号:{{orderListItem.orderNo}}</view>
+                </view> -->
+
+
+      </view>
+      <view class="headerRightView">
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+        <!-- <view class="headerOrderState" >{{orderListItem.orderStatusStr}}</view> -->
+      </view>
+    </view>
+    <view class='ordernumber'>
+      <text>订单号：{{orderListItem.orderNo}}</text>
+      <text wx:if="{{orderListItem.orderStatus==-2}}">未支付</text>
+      <text wx:if="{{orderListItem.orderStatus==1}}">已支付</text>
+      <text wx:if="{{orderListItem.orderStatus==0}}">商家未接单</text>
+      <text wx:if="{{orderListItem.orderStatus==2}}">已接单</text>
+      <text wx:if="{{orderListItem.orderStatus==7}}">上门接送</text>
+      <text wx:if="{{orderListItem.orderStatus==10}}">已到店面</text>
+      <text wx:if="{{orderListItem.orderStatus==11}}">服务中</text>
+      <text wx:if="{{orderListItem.orderStatus==12}}">服务中</text>
+      <text wx:if="{{orderListItem.orderStatus==13}}">待接回</text>
+      <text wx:if="{{orderListItem.orderStatus==3}}">已完成</text>
+      <text wx:if="{{orderListItem.orderStatus==8}}">退款中</text>
+      <text wx:if="{{orderListItem.orderStatus==4}}">同意退款</text>
+      <text wx:if="{{orderListItem.orderStatus==9}}">拒绝退款</text>
+      <text wx:if="{{orderListItem.orderStatus==5}}">退款成功</text>
+      <text wx:if="{{orderListItem.orderStatus==6}}">已评价</text>
+    </view>
+    <view class="centerView">
+      <view class="goodsListView" wx:for="{{orderListItem.goodsList}}" wx:key="{{index}}" wx:for-item="goodsListItem">
+        <view class="goodsItemLeftView">
+          <!-- <view class="goodsName">{{goodsListItem.goodsName}}</view> -->
+          <image src='{{goodsListItem.icon}}' mode='widthFix'></image>
+        </view>
+        <view class="goodsItemRightView">
+          <text>{{goodsListItem.goodsName}}</text>
+
+          <text class="goodsSingPric">￥{{goodsListItem.price}}</text>
+          <text class="goodsNumber">X{{goodsListItem.count}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='ordertime'>
+      <text>下单时间：{{orderListItem.createdate}}</text>
+      <block wx:if="{{orderListItem.address!=null}}">
+        <text wx:if="{{orderListItem.deliverTime==null}}">服务时间：{{orderListItem.receiveTime}}</text>
+      </block>
+      <text wx:if="{{orderListItem.deliverTime!=null}}">接宠时间：{{orderListItem.receiveTime}}</text>
+      <text wx:if="{{orderListItem.deliverTime!=null}}">送宠时间：{{orderListItem.deliverTime}}</text>
+    </view>
+    <view class='message'>
+      <text>备注</text>
+      <text>实际付款￥{{orderListItem.payoffamount + orderListItem.purseamount}}</text>
+    </view>
+
+    <view class="footerView">
+      <view class="leftView">
+        <!-- <view class="serviceAndPrice">服务费:￥{{orderListItem.servicePrice}}元 合计:￥{{orderListItem.servicePrice + orderListItem.goodsPrice}}元</view> -->
+        <!-- <view >下单时间:{{orderListItem.createTime}}</view> -->
+        <view catchtap="orderAction" wx:if="{{orderListItem.orderStatus != 4&&orderListItem.orderStatus!=-2}}" data-orderitem="{{orderListItem}}" class="footerViewBt">申请退款</view>
+
+        <view catchtap="reminder" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus != 6&&orderListItem.orderStatus!=-2&&orderListItem.orderStatus!=8&&orderListItem.orderStatus!=4&&orderListItem.orderStatus!=5&&orderListItem.orderStatus!=3&&orderListItem.orderStatus!=9}}" class="footerViewBt">催单</view>
+
+        <view catchtap="conOrder" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 10 || orderListItem.orderStatus == 13}}" class="footerViewBt">确认订单</view>
+      </view>
+      <view class="rightView">
+        <text wx:if="{{orderListItem.orderStatus == 0}}" style='line-height:110rpx;'>商家已拒单,请等待退款</text>
+        <!-- <text wx:if="{{orderListItem.orderStatus == 6}}">已评价</text> -->
+        <!-- <text wx:if="{{orderListItem.orderStatus == 7 || orderListItem.orderStatus == 13}}">查看配送员</text> -->
+        <view wx:if="{{orderListItem.orderStatus==1||orderListItem.orderStatus==2||orderListItem.orderStatus==7||orderListItem.orderStatus==10||orderListItem.orderStatus==11}}" class="footerViewBt" data-orderId="{{orderListItem.id}}" data-shopId="{{orderListItem.shopId}}" catchtap='toReAddOrder'>追加订单</view>
+        <view catchtap="commentOrder" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 3}}" class="footerViewBt">去评价</view>
+        <view wx:if="{{orderListItem.orderStatus==1||orderListItem.orderStatus==2||orderListItem.orderStatus==7||orderListItem.orderStatus==10||orderListItem.orderStatus==11||orderListItem.orderStatus==12||orderListItem.orderStatus==13}}" catchtap="pushDeliveryInfo" data-orderitem="{{orderListItem}}" class="footerViewBt">查看配送员</view>
+        <button open-type="share" catchtap='onShareAppMessage' class='share' style='display:none'>分享</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:if="{{!hasLocation}}">
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【宠物之家】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:elif="{{!hasUserInfo}}">
+  <!--<image class="alertImg" src="../../images/iconfont-help.png"></image>-->
+  <icon type="info" size="93"></icon>
+  <view class="alertTitle">【宠物之家】程序获取您公开的的个人信息,将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>

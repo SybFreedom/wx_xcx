@@ -1,0 +1,12 @@
+ <view class="page"> 
+      <button class='shareBt' open-type="share" style="margin-top: {{windowHeight - 80}}px;">
+          <view>分享给您的宠友</view>
+          <view>为他（她）省去20元</view>
+      </button>
+
+      <image class='shareImg' src="../../images/paySuccessShare_hd.jpg" 
+    style="height: {{windowHeight - 40}}px; width: {{windowWidth}}px;"
+    bindtap="shareToFriend">
+      </image>
+    
+ </view> 

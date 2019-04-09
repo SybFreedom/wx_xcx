@@ -1,0 +1,226 @@
+<view class="container">
+
+  <view class="header" style='display:none'>
+    <view class='leftLayout'>
+      <image class="logo" src="{{item.logo}}" />
+      <!-- <view class='stars'>
+        <text class='orderCount'>评价:<text class='orderYellowColor'>{{item.grade}}</text>分</text>
+      </view> -->
+    </view>
+
+    <view class='content'>
+      <text class="name ellipsis">{{item.name}}</text>
+
+      <view class="welcome">{{item.sysNotice}}</view>
+
+      <!-- <view>
+        <text class='orderCount'>月销量：<text class='orderYellowColor'>{{item.orderCount}}</text>单</text>
+      </view> -->
+      <view class='yytime'>
+        <text>营业时间</text>
+        <text>早上{{item.starttime}}点到下午{{item.endtime}}点</text>
+      </view>
+      <view class='address'>
+        <text>地址</text>
+        <text>{{item.address}}</text>
+      </view>
+      <!-- <view>
+        <text class='orderCount'>配送费：<text class='orderYellowColor'>{{item.baseCharg > item.goodsPrice ? item.goodsPrice :  item.baseCharg}}</text>元起,超过<text class='orderYellowColor'>{{item.baseDistance/1000}}</text>km每公里加收<text class='orderYellowColor'>{{item.overCharg}}</text>元</text>
+      </view> -->
+
+      <!-- <view>
+        <text class='orderCount'>距您：<text class='orderYellowColor'>{{item.distance}}</text></text>
+      </view> -->
+
+      <!-- <view>
+        <text class='orderCount'>联系电话：<text class='orderYellowColor'>{{item.tel}}</text></text>
+      </view> -->
+    </view>
+  </view>
+  <view class='sjmessage' style='display:none'>
+    <view class='sjmessage_top'>
+      <view>
+        <image src='/images/tubiao_03.png' mode='widthFix'></image>
+        <text>配送费：<!--{{item.baseCharg > item.goodsPrice ? item.goodsPrice :  item.baseCharg}}元起,超过{{item.baseDistance/1000}}km每公里加收{{item.overCharg}}元--></text> 
+        <text style='color:#FF4800' bindtap='godisFee'>查看详情 ></text>
+      </view>
+      <!-- <view bindtap='addCollection'>
+        <image src="{{isCollection ? '/images/wjx_select.png' : '/images/wjx.png'}}" mode='widthFix'></image>
+        <text>{{isCollection ? '已收藏' : '收藏'}}</text>
+      </view> -->
+      <view bindtap='showshopimg'>
+        <text>查看店铺</text>
+        <image src="{{isshowshopimg?'/images/goTop_03.png':'/images/goBottom_03.png'}}" mode='widthFix'></image>
+      </view>
+    </view>
+    <view class='sjmessage_photo' style="display:{{isshowshopimg?'block':'none'}}" >
+      <block wx:for="{{item.shumImgList}}" wx:key="{{index}}" wx:if="{{index<3}}">
+        <image src='{{item}}'  data-index='{{index}}' bindtap='previewImg' mode='widthFix'></image>
+      </block>      
+    </view>
+
+    <view class='sjmessage_content'>
+      <view bindtap='calling' data-tel="{{item.tel}}">
+        <image src='/images/tubiao_07.png' mode='widthFix' style='width:30rpx;'></image>
+        <text>{{item.tel}}</text>
+      </view>
+      <view bindtap='gomap'>
+        <image src='/images/tubiao_09.png' mode='widthFix'style='width:30rpx;'></image>
+        <text>{{item.distance}}</text>
+      </view>
+      <view>
+        <image src='/images/tubiao_11.png' mode='widthFix'style='width:40rpx;'></image>
+        <text>{{item.orderCount}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='jg'></view> -->
+
+  <view class="chooseView" style="display:none">
+    <view class="chooseItem" id="0" catchtap="chooseClick">
+      <view class="service" style="color: {{isServiceColor ? '#303030':'#999'}}">
+        <text style="border-bottom-color: {{isServiceColor ? '#ffd33a':'transparent'}}" class='chooseItemText'>服务</text>
+      </view>
+    </view>
+    <view class="chooseItem" id="1" catchtap="chooseClick">
+      <view class="goods" style="color: {{isGoodsColor ? '#303030':'#999'}}">
+        <text style="border-bottom-color: {{isGoodsColor ? '#ffd33a':'transparent'}}" class='chooseItemText'>商品</text>
+      </view>
+    </view>
+    <view class="chooseItem" id="2" catchtap="chooseClick">
+      <view class="evalue" style="color: {{isEvalueColor ? '#303030':'#999'}}">
+        <text style="border-bottom-color: {{isEvalueColor ? '#ffd33a':'transparent'}}" class='chooseItemText'>评价</text>
+      </view>
+    </view>
+  </view>
+  <view class="content-container" hidden="{{!isServiceColor}}">
+    <scroll-view class="classify-container" wx:if="{{newGoodsList.length>0}}" scroll-y="true" style=" width:90px;">
+      <view class="classify" wx:for="{{newGoodsList}}" wx:for-item="item" wx:key="id" data-id="{{item}}" bindtap="tapClassify" style="background-color:{{item.selected ? '#ffffff':'#efefef'}};        color:{{item.selected ? '#ffd33a':'#303030'}};">
+        <view wx:if="{{item.selected}}" class='itemCutView'></view>
+        <view class="name">{{item.name}}</view>
+      </view>
+    </scroll-view>
+    <scroll-view class="goods-container" scroll-y="true">
+      <!-- <view class='titleHeaderView'>{{newGoodsList[currentClassIndex].name}}</view> -->
+      
+      <view class="goodsContentView" wx:for="{{newGoodsList[currentClassIndex].childList}}" wx:for-item="item" wx:key="id" bindtap='itemClick' data-item='{{item}}'>
+        <view class="goodsLeftView">
+          <image class="goodsIcon" src="{{item.icon}}"></image>
+          <view class="goodsDesItem">
+            <view class="goodsTitle">{{item.name}}</view>
+            <view class="goodsPrice">
+              <text wx:if="{{item.discount==0 || item.discount==null}}">￥{{item.price}}</text>
+              <text wx:else>￥{{item.price*item.discount/10}}</text>
+              <text style="font-size:9pt; color:#606060; font-weight:normal; text-decoration:line-through; margin-left:10rpx">￥{{item.price}}</text>
+            </view>
+            <view class="goodsSold">销量:{{item.sellCount}}</view>
+          </view>
+        </view>
+
+        <view class="goodsItemRight">
+          <view class="goodsAddView" data-id="{{item.id}}" catchtap="tapReduceCart" data-reducetype="1" wx:if="{{item.selectCount > 0}}">
+            <image class="goodsAddView" src="../../images/goodsReduce.png"></image>
+          </view>
+
+          <view class="goodsSelectCountView" wx:if="{{item.selectCount > 0}}">{{item.selectCount}}</view>
+          <image class="goodsAddView" catchtap="tapAddCart" data-id="{{item.id}}" src="../../images/goodsAdd.png"></image>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="content-container" hidden="{{!isGoodsColor}}">
+    <scroll-view class="classify-container" wx:if="{{newGoodsList.length>0}}" scroll-y="true" style="width:0px;">
+      <view class="classify" wx:for="{{newGoodsList}}" wx:for-item="item" wx:key="id" data-id="{{item}}" bindtap="tapClassify" style="background-color:{{item.selected ? '#ffffff':'#efefef'}};        color:{{item.selected ? '#ffd33a':'#303030'}};">
+        <view wx:if="{{item.selected}}" class='itemCutView'></view>
+        <view class="name">{{item.name}}</view>
+      </view>
+    </scroll-view>
+    <scroll-view class="goods-container" scroll-y="true" style="width:{{windowHeight-90}}px;">
+      <!-- <view class='titleHeaderView'>{{newGoodsList[currentClassIndex].name}}</view> -->
+      <!-- <view style='width:90%; height:50rpx; background-color:red; padding:0 5%;'> -->
+        <!-- <view class='tui-countdown-content' wx:for="{{countDownList}}" wx:key="countDownList">
+          <text>活动倒计时:</text>
+          <text class='tui-conutdown-box'>{{item.day}}</text>天
+          <text class='tui-conutdown-box'>{{item.hou}}</text>时
+          <text class='tui-conutdown-box'>{{item.min}}</text>分
+          <text class='tui-conutdown-box tui-countdown-bg'>{{item.sec}}</text>秒
+        </view> -->
+      <!-- </view> -->
+      <!-- <view style="display:{{endStatus==true?'block':'none'}};margin-left:25rpx">活动已结束</view> -->
+      <view style='padding-left:55rpx;padding-top:20rpx'>
+        <image src='https://www.chongdaopet.com/images/20190222144138.png' style='height:33rpx;width:139rpx'></image>
+      </view>
+      <view class="goodsContentView" wx:for="{{newGoodsList[currentClassIndex].childList}}" wx:for-item="item" bindtap='itemClick' wx:key="id" data-item="{{item}}" style="display:{{endStatus==true?'block':'block'}}">
+        <view class="goodsLeftView">
+          <image class="goodsIcon" src="{{item.icon}}"></image>
+          <view class="goodsDesItem">
+            <view class="goodsTitle">{{item.name}}</view>
+            <view class="goodsPrice">
+              <text wx:if="{{item.discount==0}}">￥{{item.price}}</text>
+              <text wx:else>￥{{item.price*item.discount/10}}</text>
+              <!-- <text style="font-size:9pt; color:#606060; font-weight:normal; text-decoration:line-through; margin-left:10rpx">￥{{item.price}}</text> -->
+            </view>
+            <view class="goodsSold">销量:{{item.sellCount}}</view>
+          </view>
+        </view>
+        <view class="goodsItemRight">
+          <view class="goodsAddView" data-id="{{item.id}}" catchtap="tapReduceCart" data-reducetype="1" wx:if="{{item.selectCount > 0}}">
+            <image class="goodsAddView" src="../../images/goodsReduce.png"></image>
+          </view>
+          <view class="goodsSelectCountView" wx:if="{{item.selectCount > 0}}">{{item.selectCount}}</view>
+          <image class="goodsAddView" catchtap="tapAddCart" data-id="{{item.id}}" src="../../images/goodsAdd.png"></image>
+        </view>
+      </view>
+
+    </scroll-view>
+  </view>
+  <view class="content-container" hidden="{{!isEvalueColor}}">
+    <scroll-view scroll-y="true" class="evalue-container">
+      <view class="userEvalueItem" wx:for="{{evalueList}}" wx:key="id">
+        <image class="userIcon" src="{{item.icon}}"></image>
+        <view class="rightContentView">
+          <view class="test">
+            <view class="userName">{{item.userName}}</view>
+            <text class="evalueTime">{{item.createdate}}</text>
+          </view>
+          <view class="evalueContent1">综合评分: {{item.grade}}</view>
+          <view class="evalueContent">{{item.content}}</view>
+          <view class='imgwrap'>
+            <image src='{{item}}' mode='widthFix' wx:for="{{item.shumImgList}}" data-index="{{index}}" wx:key="{{index}}" bindtap='showimg'></image>
+          </view>
+          <view class="evalueItemCutView"></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="cart-detail" hidden="{{!showCartDetail}}">
+    <view class="mask" bindtap="hideCartDetail"></view>
+    <view class="list">
+      <view class="item" wx:for="{{cart.list}}" wx:for-item="num" wx:key="id">
+        <view class="name ellipsis">{{num.name}}</view>
+        <view class="total">￥{{num.price*num.selectCount}}</view>
+        <image class="reduce" data-id="{{num.id}}" bindtap="tapReduceCart" src="../../images/goodsReduce.png"></image>
+
+        <view class="num">{{num.selectCount}}</view>
+        <image class="add" data-id="{{num.id}}" bindtap="tapAddCart" src="../../images/goodsAdd.png"></image>
+
+      </view>
+    </view>
+  </view>
+  <view class="cart">
+    <view class="data" bindtap="showCartDetail">
+      <view class="icon">
+        <image style='width:30px;' mode='widthFix' src="/images/shopCaricon_03.png"></image>
+        <view class="count" wx:if="{{cart.total > 0}}">{{cart.count}}</view>
+      </view>
+      <view>
+        <view class="totalPrice" wx:if="{{cart.total > 0}}">￥{{cart.total}}</view>
+        <view class="total" wx:if="{{cart.total > 0}}">配送费:{{disfee}}元起</view>
+      </view>
+      
+    </view>
+    <view class='settlementBgView'>
+      <text class="{{cart.total > 0 ? 'settlemented':'noettlement'}}" catchtap="{{cart.count > 0 ? 'submit' : '' }}" data-goodslist="{{cart.list}}">{{cart.total > 0 ? '去结算' : '立即购买'}}</text>
+    </view>
+  </view>
+</view>

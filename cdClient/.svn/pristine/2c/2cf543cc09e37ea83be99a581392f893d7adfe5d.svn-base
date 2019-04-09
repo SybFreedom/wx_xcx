@@ -1,0 +1,13 @@
+<!--<template name="alertView">
+  <view  class="noLocationPermissionsView" >
+    <image class="alertImg" src="../../images/empty_address.png"></image>
+    <view class="alertTitle">【宠物之家】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+  </view>
+</template>-->
+
+<template name="alertView">
+  <view class="noLocationPermissionsView" >
+    <image class="alertImg" src="{{icon}}"></image>
+    <view class="alertTitle">{{title}}</view>
+  </view>
+</template>

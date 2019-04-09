@@ -1,0 +1,10 @@
+<!--pages/serviceDes/serviceDes.wxml-->
+<view class="container">
+  <text>{{item.title}}</text>
+  <text>时间：{{item.createdate}}</text>
+  <text>{{item.content}}</text>
+  <text wx:if="{{item.type==0}}">来源：系统</text>
+  <text wx:if="{{item.type==1}}">来源：市场</text>
+  <text wx:if="{{item.type==2}}">来源：管理员</text>
+  <text wx:if="{{item.type==3}}">来源：区域管理员</text>
+</view>

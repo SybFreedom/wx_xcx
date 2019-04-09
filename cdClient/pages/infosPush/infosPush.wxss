@@ -1,0 +1,58 @@
+/* pages/infosPush/infosPush.wxss */
+page>image:nth-of-type(1) {
+  width: 750rpx;
+  position: absolute;
+  top: 0;
+}
+
+.container {
+  width: 520rpx;
+  height: 520rpx;
+  position: absolute;
+  top: 350rpx;
+  left: 50%;
+  margin-left: -260rpx;
+}
+
+.container>text {
+  font-size: 28rpx;
+  color: #000;
+  text-align: justify;
+  line-height: 28rpx;
+}
+
+.container>input {
+  font-size: 24rpx;
+  line-height: 24rpx;
+  text-align: justify;
+  border-bottom: 2rpx solid #666;
+}
+
+.container>input::placeholder {
+  color: #6a4c4c;
+}
+
+.subInfos {
+  width: 400rpx;
+  height: 70rpx;
+  border-radius: 35rpx;
+  position: absolute;
+  background-color: #ffd33a;
+  top: 900rpx;
+  text-align: center;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  color: #64363c;
+  left: 50%;
+  margin-left: -200rpx;
+  z-index: 1
+}
+page>text{
+  width: 500rpx;
+  position: absolute;
+  top: 900rpx;
+  left: 50%;
+  margin-left: -250rpx;
+  font-size: 20rpx;
+  z-index: 1
+}

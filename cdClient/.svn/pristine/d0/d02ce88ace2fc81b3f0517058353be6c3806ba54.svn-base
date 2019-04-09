@@ -1,0 +1,23 @@
+/* pages/cancelOrder/cancelOrder.wxss */
+page{
+  background-color: white;
+}
+
+.cancelInput{
+  width: auto;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 150px;
+  border: 1px solid #ececec;
+  border-radius: 5px;
+}
+
+.commitBt{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 15px;
+  background-color: #FFD328;
+  color: #333333;
+  height: 40px;
+}

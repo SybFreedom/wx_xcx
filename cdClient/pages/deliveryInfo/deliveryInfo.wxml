@@ -1,0 +1,37 @@
+<!--pages/deliveryInfo/deliveryInfo.wxml-->
+
+<view class='page' wx:if="{{orderItem}}">
+  <view class='flex-row flex-space-between flex-center weui-footer page__bd_spacing deliveryInfo shadowCCC'>
+    <view class='peopleInfo flex-row flex-center'>
+      <image class='avatar' src='../../images/ic_courier.png'></image>
+      <view class='flex-column'>
+        <text class='font_14'>{{orderItem.courier.realName}}</text>
+        <text class='font_14'>{{orderItem.courier.userName}}</text>
+      </view>
+    </view>
+
+    <view class='telInfo flex-row flex-center' style='background-color:white' catchtap='callTel' data-tel="{{orderItem.courier.userName}}">
+      <image class='telIcon' src='../../images/btn_express_telephone.png'></image>
+    </view>
+  </view>
+
+<!-- <view class='flex-row flex-center deliveryInfoDes'>
+    <image class='icon' src='../../images/ic_transport.png'></image>
+    <text>当前快递信息</text>
+</view> -->
+
+  <!-- <view class="steps shadowCCC">
+    <i-steps current="{{orderItem.deliveryList.length-1}}">
+      <i-step wx:for="{{orderItem.deliveryList}}" status="finish">
+        <view slot="title">
+          {{item.note}}
+        </view>
+        <view slot="content">
+          {{item.createTime}}
+        </view>
+      </i-step>
+    </i-steps>
+  </view> -->
+
+  <map class='map shadowCCC' show-location='true' latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" markers="{{markers}}" controls="{{controls}}" style='height:{{mapHeight}}px'></map>
+</view>

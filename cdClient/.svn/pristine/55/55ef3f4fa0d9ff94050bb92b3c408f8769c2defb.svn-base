@@ -1,0 +1,86 @@
+
+  <view class='emptyOrder' wx:if="{{orderList==''}}">
+    <view>
+      <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+      <text>干干净净，你的宠物在召唤您哟~</text>
+      <text>快去购买服务或商品吧！</text>
+    </view>
+  </view>
+  <scroll-view wx:if="{{hasUserInfo && hasLocation}}" scroll-y="ture">
+    <view class="secitonView" wx:for="{{orderList}}" wx:for-item="orderListItem" catchtap="orderDeitailClick" data-orderitem="{{orderListItem}}">
+         <view class="headerView">
+              <view class="headerLeftView">
+                <image class="headerIcon" src="{{orderListItem.logo}}"></image>
+                <text>{{orderListItem.shopName}}</text>
+                
+                <!-- <view class="nameAndOrderNumber">
+                  <view class="headerName">{{orderListItem.shopName}}</view>
+                  <view class="headerOrderNum">订单号:{{orderListItem.orderNo}}</view>
+                </view> -->
+
+                
+              </view>
+              <view class="headerRightView">
+                <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+                <!-- <view class="headerOrderState" >{{orderListItem.orderStatusStr}}</view> -->
+              </view>
+         </view>
+         <view class='ordernumber'>
+           <text>订单号：{{orderListItem.orderNo}}</text>
+           <text>{{orderListItem.orderStatusStr}}</text>
+         </view>
+         <view class="centerView">
+            <view class="goodsListView" wx:for="{{orderListItem.goodsList}}" wx:for-item="goodsListItem">
+              <view class="goodsItemLeftView">
+                <!-- <view class="goodsName">{{goodsListItem.goodsName}}</view> -->
+                <image src='{{goodsListItem.icon}}' mode='widthFix'></image>
+              </view>
+              <view class="goodsItemRightView">
+                <text>{{goodsListItem.goodsName}}</text>
+                
+                <text class="goodsSingPric">￥{{goodsListItem.price}}</text>
+                <text class="goodsNumber">X{{goodsListItem.count}}</text>
+              </view>
+         </view>
+         </view>
+         <view class='ordertime'>
+           <text>下单时间：{{orderListItem.createTime}}</text>
+           <text>接宠时间：{{orderListItem.createTime}}</text>
+           <text>送宠时间：{{orderListItem.createTime}}</text>
+         </view> 
+         <view class='message'>
+           <text>备注</text>
+           <text>实际付款￥{{orderListItem.servicePrice + orderListItem.goodsPrice}}</text>
+         </view>
+
+         <view class="footerView">
+              <view class="leftView">
+                <!-- <view class="serviceAndPrice">服务费:￥{{orderListItem.servicePrice}}元 合计:￥{{orderListItem.servicePrice + orderListItem.goodsPrice}}元</view> -->
+                <!-- <view >下单时间:{{orderListItem.createTime}}</view> -->
+                <view catchtap="orderAction" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 1}}" class="footerViewBt">申请退款</view>
+
+              <view catchtap="reminder" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 1}}" class="footerViewBt">催单</view>
+
+              <view catchtap="reminder" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 2}}" class="footerViewBt">催单</view>
+
+              <view catchtap="orderAction" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 2}}" class="footerViewBt">确认订单</view>
+              </view>
+              <view class="rightView">
+                <text wx:if="{{orderListItem.orderStatus == 1}}">待接单</text>
+                <text wx:if="{{orderListItem.orderStatus == 6}}">查看配送员</text>
+         <view catchtap="orderAction" data-orderitem="{{orderListItem}}" wx:if="{{orderListItem.orderStatus == 3}}" class="footerViewBt">去评价</view>
+          </view>            
+        </view>
+    </view>
+</scroll-view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:if="{{!hasLocation}}">
+    <icon type="info" size="93"></icon>
+    <view class="alertTitle">【宠物之家】程序获取您的位置将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>
+
+<view style="height: {{windowHeight}}px; width: {{windowWidth}}px;" class="noLocationPermissionsView" wx:elif="{{!hasUserInfo}}">
+    <!--<image class="alertImg" src="../../images/iconfont-help.png"></image>-->
+    <icon type="info" size="93"></icon>
+    <view class="alertTitle">【宠物之家】程序获取您公开的的个人信息,将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权</view>
+</view>

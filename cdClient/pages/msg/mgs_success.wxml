@@ -1,0 +1,28 @@
+ <view class="container"> 
+      <!-- <button class='shareBt' open-type="share" style="margin-top: {{windowHeight - 80}}px;">
+          <view>分享给您的宠友</view>
+          <view>为他（她）省去20元</view>
+      </button>
+
+      <image class='shareImg' src="../../images/paySuccessShare_hd.jpg" 
+    style="height: {{windowHeight - 40}}px; width: {{windowWidth}}px;"
+    bindtap="shareToFriend">
+      </image> -->
+  <view>
+    <image src='/images/paySuccess_03.png' mode='widthFix'></image>
+    <text>下单成功</text>
+    <text>推荐好友，领取惊喜</text>
+    <view>
+      <navigator url='/pages/order/order' open-type='switchTab'>
+        <text>查看订单</text>
+      </navigator>
+      <navigator url='/pages/home/home' open-type='switchTab'>
+        <text>返回首页</text>
+      </navigator>
+    </view>
+    <button open-type="share">
+        <text>点击分享3次领券</text>
+    </button>
+  </view>
+    
+ </view> 

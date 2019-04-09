@@ -1,0 +1,224 @@
+// pages/order/order.js
+var app = getApp();
+const clientApi = require('../../utils/clientApi.js').clientApi
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    windowHeight: 0,
+    windowWidth: 0,
+    hasLocation: true,
+    hasUserInfo: true,
+    orderList:[]
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+      this.setData({
+        windowHeight: app.windowHeight,
+        windowWidth: app.windowWidth
+      })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.getPermiss();
+  },
+
+  getPermiss: function () {
+    var _this = this;
+    app.getUserInfoPermissions(function locationS(msg) {
+
+      if (msg == 0) {
+        _this.setData({
+          hasLocation: true
+        })
+      } else if (msg == 1) {
+        _this.setData({
+          hasLocation: false
+        })
+      } else if (msg == 2) {
+        _this.setData({
+          hasUserInfo: true
+        })
+        _this.getOrderList();
+      } else if (msg == 3) {
+        _this.setData({
+          hasUserInfo: false
+        })
+      }
+    });
+  },
+
+  getOrderList: function (){
+    console.log(app.userId)
+    var _this = this;
+    clientApi.getOrderList({ userId: app.userId}).then(d => {
+       console.log(d);
+      _this.setData({
+        orderList: d.data.data
+      })
+    })
+    console.log(this.data.orderList);
+  },
+
+  getUserInfoPermissions: function() {
+    var _this = this;
+    wx.getSetting({
+      success(res) {
+        if (!res['scope.userInfo']) {
+          wx.authorize({
+            scope: 'scope.userInfo',
+            success() {
+              _this.getOrderList();
+            },
+            fail() {
+              wx.showModal({
+                title: '提示！！！',
+                content: '【宠物之家】程序获取您公开的个人信息将更好的为您服务,如果不小心拒绝授权之后,请点击右上角选择关于宠物之家,进入之后再点击右上角，点击设置，并且授权',
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  orderAction: function (e){
+
+    console.log(e);
+    console.log(e.target.dataset.orderitem);
+
+    let orderitem = e.target.dataset.orderitem;
+
+    var _this = this;
+    if (orderitem.orderStatus == 1) {
+      wx.navigateTo({
+        url: '../../pages/cancelOrder/cancelOrder?orderId=' + orderitem.id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else if (orderitem.orderStatus == 2) {
+      var _this = this;
+      clientApi.sureOrder({ id: orderitem.id}).then(d => {
+        if (d.success) {
+          _this.onShow();
+          wx.showToast({
+            title: '确认订单成功',  
+          })
+        } else {
+          wx.showToast({
+            title: d.msg,
+          })
+        }
+      })
+    } else if (orderitem.orderStatus == 3) {
+      this.commentOrder(orderitem);
+    } else if (orderitem.orderStatus == 5 || orderitem.orderStatus == 6) {
+      var _this = this;
+      clientApi.delOrder({ id: orderitem.id }).then(d => {
+        if (d.success) {
+          _this.onShow();
+          wx.showToast({
+            title: '删除订单成功',
+          })
+        }
+      })
+    }
+
+   
+  },
+
+  commentOrder: function (orderitem){
+    orderitem.des = ""
+    let item = JSON.stringify(orderitem);
+    wx.navigateTo({
+      url: '../../pages/commentOrder/commentOrder?item=' + item,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+
+  reminder: function (){
+      wx.showToast({
+        icon:'none',
+        title: '催单成功,已成功提醒卖家',
+      })
+  },
+  orderDeitailClick: function (e){
+    console.log(e);
+    let orderitem = e.currentTarget.dataset.orderitem;
+    orderitem.des = ""
+    let item = JSON.stringify(orderitem);
+    wx.navigateTo({
+      url: '../../pages/orderDetail/orderDetail?item=' + item,
+    })
+  }
+})

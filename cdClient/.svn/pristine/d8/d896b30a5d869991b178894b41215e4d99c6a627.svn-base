@@ -1,0 +1,96 @@
+// pages/orderDetail/orderDetail.js
+var app = getApp();
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    item:{}
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let orderItem = JSON.parse(options.item);
+    console.log(orderItem);
+    this.setData({
+      item: orderItem
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+  callTel: function () {
+    var that = this;
+    wx.makePhoneCall({
+      phoneNumber: that.data.item.tel //仅为示例，并非真实的电话号码
+    })
+  },
+  //跳转到配送详情页面
+  gopsdetails:function(){
+    wx.navigateTo({
+      url: '/pages/psdetails/psdetails',
+    })
+  },
+  //跳转到联系卖家页面
+  gocontact:function(){
+    // console.log(this.data.item.shopName);
+    // console.log(this.data.item.tel);
+    // console.log(this.data.item.logo);
+    let shopmsg=JSON.stringify({name:this.data.item.shopName,tel:this.data.item.tel,icon:this.data.item.logo});
+    wx.navigateTo({
+      url: '/pages/contact/contact?item='+shopmsg,
+    })
+  }
+})

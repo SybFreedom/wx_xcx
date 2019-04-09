@@ -1,0 +1,24 @@
+/* pages/serviceDes/serviceDes.wxss */
+page{
+  background-color: white;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.QView{
+  margin-bottom: 15px;
+  margin-left: 15px;
+  font-weight:bold;
+  color: black;
+  font-size: 32rpx;
+}
+
+.ASView{
+  margin-left: 15px;
+  font-size: 28rpx;
+  color: #666;
+}

@@ -1,0 +1,471 @@
+var tools = require('../../utils/util.js');
+var app = getApp();
+var server = require('../../utils/server');
+const clientApi = require('../../utils/clientApi.js').clientApi;
+
+Page({
+	data: {
+    item:{},
+    headerHeight:176,
+    scrollHeight:0,
+    windowHeight: 0,
+    currentIndex:0,
+    currentClassIndex:0,
+    isServiceColor: true,
+    isGoodsColor: false,
+    isEvalueColor: false,
+    newGoodsList: [],
+		cart: {
+			count: 0,
+			total: 0,
+			list: []
+		},
+		showCartDetail: false,
+    evalueList:[
+      { icon: '/images/testImg_03.png', userName: "测试评论", createTime: "2018-08-26", grade: '5', content:"测试评论测试评论"}
+    ],
+    serviceList: [],
+    goodsList: [],
+    shipPrice: 0,
+    shopimg: ['http://192.168.0.11:8081/images/1536507023995.jpg', 'http://192.168.0.11:8081/images/1536507023995.jpg', 'http://192.168.0.11:8081/images/1536507023995.jpg',],
+    isshowshopimg:false, //是否显示商家图片
+    imglist: ['http://192.168.0.11:8081/images/1536507023995.jpg', 'http://192.168.0.11:8081/images/1536507023995.jpg', 'http://192.168.0.11:8081/images/1536507023995.jpg','http://192.168.0.11:8081/images/1536507023995.jpg'],
+	},
+	onLoad: function (options) {
+    var that = this;
+    wx.getSystemInfo({
+      success: (res) => {
+        that.setData({
+          scrollHeight: res.windowHeight - 50 - 50 - that.data.headerHeight,
+          windowHeight: res.windowHeight - 50 - that.data.headerHeight - 40 - 20
+        });
+      }
+    })
+    
+    if (options.item == null) {
+      let shopId = options.shopId;
+      var that = this;
+      clientApi.getShopById({ id: shopId}).then(d => {
+        that.setData({
+          item: d.data
+        })
+        that.loadDatas(2);
+        that.getEvalueList();
+      })
+    } else {
+      let item = JSON.parse(options.item);
+      this.setData({
+        item: item
+      })
+      this.loadDatas(2);
+      this.getEvalueList();
+    }
+
+    console.log(this.data.item);
+    
+	},
+	onShow: function () {
+    if (app.wxPayState) {
+      this.clearStates();
+      app.wxPayState = false;
+    }
+	},
+	tapAddCart: function (e) {
+		this.addCart(e.target.dataset.id);
+	},
+	tapReduceCart: function (e) {
+    this.reduceCart(e.currentTarget.dataset.id, e.currentTarget.dataset.reducetype);
+	},
+	addCart: function (id) {
+
+    var listSearchDatas = this.data.cart.list.filter(function (obj) {
+      return id == obj.id;
+    });
+
+    var goods;
+
+    var currentClassIndex = this.data.currentClassIndex;
+    if (listSearchDatas.length>0) {
+      goods = listSearchDatas[0]; 
+    } else {
+      var currentClassItem = this.data.newGoodsList[currentClassIndex];
+      var result = currentClassItem.childList.filter(function (obj) {
+        return id == obj.id;
+      });
+      goods = result[0];
+    }
+
+    this.data.newGoodsList[currentClassIndex].childList.forEach(function (item, index) {
+      if (id == item.id) {
+        item.selectCount += 1;
+      }
+    });
+
+    var listDatas = this.data.cart.list.filter(function (obj) {
+      return id == obj.id;
+    });
+
+    if (listDatas.length == 0) {
+      goods['selectCount'] = 1;
+      this.data.cart.list.push(goods);
+    } else {
+      this.data.cart.list.forEach(function (item, index) {
+        if (goods.id == item.id) {
+          item.selectCount += 1;
+        }
+      });
+    }
+
+		this.countCart();
+	},
+  reduceCart: function (id, reducetype) {
+    
+    var datas = this.data.cart.list;
+
+    this.data.cart.list.forEach(function (item, index) {
+      if (id == item.id) {
+        if (item.selectCount <= 1) {
+          datas.splice(index, 1);
+        } else {
+          item.selectCount -= 1;
+        }
+      }
+    });
+
+    var currentClassIndex = this.data.currentClassIndex;
+
+    this.data.newGoodsList.forEach(function (item, index) {
+      item.childList.forEach(function (childItem, index){
+        if (id == childItem.id) {
+          childItem.selectCount -= 1;
+        }
+      })
+    });
+
+      this.data.serviceList.forEach(function (item, index) {
+        item.childList.forEach(function (childItem, index) {
+          if (id == childItem.id) {
+            childItem.selectCount -= 1;
+          }
+        })
+      });
+      this.data.goodsList.forEach(function (item, index) {
+        item.childList.forEach(function (childItem, index) {
+          if (id == childItem.id) {
+            childItem.selectCount -= 1;
+          }
+        })
+      });
+
+    this.data.cart.list = datas;
+		this.countCart();
+    if (reducetype == 1) {
+      this.setData({
+        newGoodsList: this.data.newGoodsList
+      });
+    } else {
+      this.setData({
+        showCartDetail: this.data.cart.count != 0,
+        newGoodsList: this.data.newGoodsList
+      });
+    }
+
+    
+	},
+
+	countCart: function () {
+		var count = 0,
+			  total = 0,
+        shipServicePrice = 0,
+        shipGoodsPriveTep = false,
+        shipServicePriveTep = false;   
+    this.data.cart.list.forEach(function (item, index) {
+      count += item.selectCount;
+      total += item.price * item.selectCount;
+      if (item.goodsType == 1) {
+        shipGoodsPriveTep = true;
+      } else {
+        shipServicePriveTep = true;
+      }
+    });
+
+    if (total > 0) {
+      if (shipGoodsPriveTep && shipServicePriveTep) {
+        shipServicePrice = this.data.item.goodsPrice > this.data.item.baseCharg ? this.data.item.goodsPrice : this.data.item.baseCharg;
+      } else {
+        shipServicePrice = shipGoodsPriveTep ? this.data.item.goodsPrice : this.data.item.baseCharg;
+      }
+    }
+
+		this.data.cart.count = count;
+    this.data.cart.total = total.toFixed(2);
+    
+		this.setData({
+			cart: this.data.cart,
+      shipPrice: shipServicePrice,
+      newGoodsList: this.data.newGoodsList
+		});
+
+	},
+
+	follow: function () {
+		this.setData({
+			followed: !this.data.followed
+		});
+	},
+	onGoodsScroll: function (e) {
+	
+	},
+	tapClassify: function (e,index) {
+    var item = e.currentTarget.dataset.id;
+    var dataSource = this.data.newGoodsList;
+    var _this = this;
+    dataSource.forEach (function (obj,i){
+      if (item.id == obj.id) {
+        obj.selected = true;
+        _this.data.currentClassIndex = i;
+      } else {
+        obj.selected = false;
+      }
+    })
+
+    if (this.currentIndex == 0) {
+      this.setData({
+        serviceList: _this.data.serviceList,
+      })
+    } else {
+      this.setData({
+        goodsList: _this.data.goodsList,
+      })
+    }
+
+    this.setData({
+      newGoodsList: dataSource,
+      currentClassIndex: _this.data.currentClassIndex
+    })
+	},
+	showCartDetail: function () {
+		this.setData({
+			showCartDetail: this.data.cart.count == 0 ? fals : !this.data.showCartDetail
+		});
+	},
+	hideCartDetail: function () {
+		this.setData({
+			showCartDetail: false
+		});
+	},
+	submit: function (e) {
+    if (tools.isEmpty(app.userId)){
+      console.log('3:::::::::::::::::::::::::::::::',app.userId)
+      wx.showModal({
+        title: '提示！',
+        content: '请检查您的权限是否全部开启,然后尝试删除小程序后，重新授权所有权限',
+      })
+    } else {
+      var goodsDatas = e.currentTarget.dataset.goodslist;
+      goodsDatas.forEach(function(obj,index){
+        obj.des = "";
+      });
+      let datas = JSON.stringify(goodsDatas);
+      let item = JSON.stringify(this.data.item);
+      // console.log(this.data.shipPrice);
+      wx.navigateTo({
+        url: '../../pages/submitOrder/submitOrder?datas=' + datas + '&item=' + item + '&shipPrice=' + this.data.shipPrice
+      })
+    }
+	},
+
+  chooseClick: function (e) {
+    var classId = e.currentTarget.id;
+    this.data.currentIndex = classId;
+    var that = this;
+      this.setData({
+        newGoodsList:[],
+        currentClassIndex:0,
+        isServiceColor: e.currentTarget.id == 0,
+        isGoodsColor: e.currentTarget.id == 1,
+        isEvalueColor: e.currentTarget.id == 2,
+      })
+
+      var datas = classId == 0 ? this.data.serviceList : this.data.goodsList;
+
+      if (datas.length > 0) {
+        var _this = this;
+        datas.forEach(function (item, index) {
+          item.childList.forEach(function (childItem, index) {
+            _this.data.cart.list.forEach(function (carItem, index) {
+              if (carItem.id == childItem.id) {
+                childItem.selectCount = carItem.selectCount;
+              }
+            });
+          })
+        });
+        this.setData({
+          newGoodsList: datas
+        });
+      } else {
+        this.loadDatas(classId == 0 ? 2 : 1);
+      }
+  },
+
+  loadDatas: function (goodsType) {
+    var _this = this;
+    clientApi.getShopClassAllGoods({ shopId: _this.data.item.id, goodsType: goodsType, pageSize: 300 }).then(d => {
+      if (d.data.length>0) {
+        d.data.forEach(function(obj,index){
+          if (index == 0) {
+            obj.selected = true;
+          }
+          obj.childList.forEach(function (childItem, childIndex){
+            childItem.goodsType = goodsType;
+          })
+        })
+      } else {
+        return;
+      }
+
+      if (goodsType == 2) {
+        _this.data.serviceList = d.data;
+      } else {
+        _this.data.goodsList = d.data;
+      }
+      var newGoodsList = goodsType == 2 ? _this.data.serviceList : _this.data.goodsList;
+      _this.setData({
+        newGoodsList: newGoodsList
+      })
+    }).catch(d => {
+      var datas = [];
+      if (goodsType == 2) {
+        _this.data.serviceList = datas;
+      } else {
+        _this.data.goodsList = datas;
+      }
+      _this.setData({
+        newGoodsList: datas
+      })
+    })
+  },
+  
+  getEvalueList:function (){
+    var _this = this;
+    clientApi.getShopEval({ shopId: _this.data.item.id,pageSize:300}).then(d =>{
+        _this.setData({
+          evalueList:d.data.data
+        })
+    })
+  },
+  callTel: function (){
+    var that = this;
+    wx.makePhoneCall({
+      phoneNumber: that.data.item.tel
+    })
+  },
+
+  clearStates:function(){
+    var that = this;
+    that.data.newGoodsList.forEach(function (item, index) {
+      item.childList.forEach(function(childItem){
+        childItem.selectCount = 0;
+      })
+    });
+    that.data.serviceList.forEach(function (item, index) {
+      item.childList.forEach(function (childItem) {
+        childItem.selectCount = 0;
+      })
+    });
+    that.data.goodsList.forEach(function (item, index) {
+      item.childList.forEach(function (childItem) {
+        childItem.selectCount = 0;
+      })
+    });
+    that.data.cart.total = 0;
+    that.data.shipPrice = 0;
+    that.data.cart.count = 0;
+    that.data.cart.list = [];
+    that.setData({
+      cart: that.data.cart,
+      newGoodsList: that.data.newGoodsList,
+      serviceList: that.data.serviceList,
+      goodsList: that.data.goodsList
+    })
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    var id = this.data.item.id;
+    var path = '/pages/shop/shop?shopId=' + id;
+    return {
+      title: app.shareTitle,
+      path: path,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+  itemClick: function (target) {
+    
+    let objItem = target.currentTarget.dataset.item;
+    app.goodsAttrubuteStr = objItem.des;
+    objItem.des = null;
+    let item = JSON.stringify(objItem);
+    let items = JSON.stringify(this.data.item);
+    let pushUrl = "../../pages/goodsDetail/goodsDetail?item=" + item + "&items=" + items + "&shipPrice=" + this.data.shipPrice;
+      wx.navigateTo({
+        url: pushUrl
+      })
+  },
+  //点击图片放大预览
+  previewImg: function (e) {
+    console.log(e.currentTarget.dataset.index);
+    var index = e.currentTarget.dataset.index;
+    var imgArr = this.data.shopimg;
+    wx.previewImage({
+      current: imgArr[index],     //当前图片地址
+      urls: imgArr,               //所有要预览的图片的地址集合 数组形式
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+  //点击拨打电话
+  calling: function (e) {
+    let tel=e.currentTarget.dataset.tel;
+    wx.makePhoneCall({
+      phoneNumber: tel, //此号码并非真实电话号码，仅用于测试
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
+    })
+  },
+  //点击显示商家图片或者隐藏商家图片
+  showshopimg:function(){
+    this.setData({
+      isshowshopimg:!this.data.isshowshopimg
+    })
+  },
+  //点击跳转到地图
+  gomap:function(e){
+    let _this=this;
+    wx.openLocation({
+      latitude:_this.data.item.lat,
+      longitude: _this.data.item.lng,
+      name: _this.data.item.name,
+      scale: 28
+    })
+  },
+  //点击查看大图
+  showimg:function(e){
+    var index=e.currentTarget.dataset.index;
+    var imgArr = this.data.imglist;
+    wx.previewImage({
+      current: imgArr[index],     //当前图片地址
+      urls: imgArr,               //所有要预览的图片的地址集合 数组形式
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  }
+});
+

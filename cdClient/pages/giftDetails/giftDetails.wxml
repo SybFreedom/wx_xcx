@@ -1,0 +1,76 @@
+<view class='container'>
+  <text>代金券详情</text>
+  <view class='details'>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>优惠说明</text>
+      </view>
+      <view>
+        <text>{{item[3]}}买120元礼券得200元礼包 含5次宠物上门接送服务，限6KM内。 含50元宠物洗澡美容抵用券，10张5元（商品服务抵用券）。
+
+</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>有效时间</text>
+      </view>
+      <view>
+        <text>2018.12.06{{item[6]}}——{{item[7]}}2019.01.31</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>可用时段</text>
+      </view>
+      <view>
+        <text>周一到周日，全天可用</text>
+      </view>
+    </view>
+    <view>
+      <view>
+        <image src='/images/xing.png' mode='widthFix'></image>
+        <text>使用须知</text>
+      </view>
+      <view>
+        <text>无门槛抵用券，进入小程序使用</text>
+      </view>
+    </view>
+  </view>
+  <view class='gosubmit' bindtap='goshow'>
+    <text>点击购买</text>
+  </view>
+
+  <view class='wrap' style="display:{{isshow?'block':'none'}}" >
+  <view bindtap='gohide'></view>
+  <view>
+    <view>
+      <view></view>
+      <text>选择购买数量</text>
+      <view></view>
+    </view>
+    
+    <view>
+      <image src='/images/goodsReduce.png' mode='widthFix' data-f="-" bindtap='gonum'></image>
+      <text>{{num}}</text>
+      <image src='/images/goodsAdd.png' data-f="+" bindtap='gonum' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <image src='/images/shopCaricon_03.png' mode='widthFix'></image>
+        <view>
+          <text>￥{{item.price*num}}</text>
+          <!-- <text>含配送费￥5.00</text> -->
+        </view>
+      </view>
+      <view bindtap='goorder'>
+        <text>去支付</text>
+      </view>
+    </view>
+  </view>
+</view>
+  
+</view>

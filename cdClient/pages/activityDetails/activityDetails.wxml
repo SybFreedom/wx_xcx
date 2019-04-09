@@ -1,0 +1,17 @@
+<view class='container'>
+  <image src='http://www.chongdaopet.com:20081/images/huodong_black.png' mode='widthFix'></image>
+  <view class='box'>
+    <image src='http://www.chongdaopet.com:20081/images/clickButton.png' bindtap='receiveGift' mode='widthFix'></image>
+    <image src='http://www.chongdaopet.com:20081/images/title.png' mode='widthFix'></image>
+    <view>
+      <text>1.本次活动只针对嘉定区内使用，其他区域将会陆续开放。</text>
+      <text>2.双程接送一次。</text>
+      <text>3.单程接送三次。</text>
+      <text>4.免费洗一次。</text>
+      <text>5.超值洗一次。</text>
+      <text>6.下单送五张半价接送抵用券。</text>
+    </view>
+    <image bindtap='showBigImg' src='http://www.chongdaopet.com:20081/images/erweima.png' mode='widthFix'></image>
+  </view>
+
+</view>

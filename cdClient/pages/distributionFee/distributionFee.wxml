@@ -1,0 +1,13 @@
+<!--pages/serviceDes/serviceDes.wxml-->
+<view class="container">
+     <view class="QView">Q1:接宠配送费用?</view>
+     <view class="ASView">{{details[0].note}}</view>
+</view>
+<view class="container">
+     <view class="QView">Q2:接宠、送宠配送费用?</view>
+     <view class="ASView">{{details[1].note}}</view>
+</view>
+<view class="container">
+     <view class="QView">Q3:宠物数量?</view>
+     <view class="ASView">{{details[2].note}}</view>
+</view>

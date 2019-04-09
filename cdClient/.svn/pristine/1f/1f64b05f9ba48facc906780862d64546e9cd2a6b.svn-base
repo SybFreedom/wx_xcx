@@ -1,0 +1,162 @@
+var app = getApp();
+var txmap = require('../../libs/map/qqmap-wx-jssdk.min.js');
+const clientApi = require('../../utils/clientApi.js').clientApi
+
+var wxMarkerData = [];  
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    userLocationAddress: {},
+    isLoadMore: true,
+    shopType: 0,
+    pageIndex: 1,
+    title: '',
+    name:'',
+    totalPage: 100,
+    windowHeight: 0,
+    windowWidth: 0,
+    items: [],
+    hotsearch: ['大型犬洗澡', '中型犬洗澡', '小型犬美容', '寄养', '狗粮','猫咪洗澡','猫砂','猫罐头'],
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.setData({
+      shopType: options.id,
+      title: options.title,
+      userLocationAddress: app.globalData.userLocationAddress
+    })
+    console.log(this.data);
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+
+  refresh: function (isShowToast) {
+    wx.showNavigationBarLoading();
+    if (isShowToast == true) {
+      wx.showToast({
+        title: '下拉刷新',
+      })
+    }
+    this.setData({
+      pageIndex: 1,
+      isLoadMore: false
+    })
+
+    this.apiGetBunessList(this.data.pageSize, this.data.pageIndex);
+  },
+
+  loadMore: function () {
+    var that = this;
+    if (!that.data.isLoadMore) { return };
+    that.data.isLoadMore = false;
+    that.apiGetBunessList(this.data.pageSize, this.data.pageIndex);
+  },
+
+  apiGetBunessList: function (pageSize, pageIndex) {
+    if (pageIndex > this.data.totalPage) { return };
+
+    if (pageIndex != 1) {
+      wx.showLoading({
+        title: '加载更多数据中。。。'
+      });
+    }
+    var _this = this;
+    clientApi.getShop({
+      currPage: pageIndex,
+      name: _this.data.name,
+      lng: _this.data.userLocationAddress.location.lng,
+      lat: _this.data.userLocationAddress.location.lat,
+      areaCode: _this.data.userLocationAddress.adcode
+    }).then(d => {
+      var datas = _this.data.items;
+      
+      if (d.data.data != null) {
+        if (pageIndex == 1) {
+          _this.setData({
+            totalPage: d.data.totalPage
+          })
+          datas = d.data.data;
+        } else {
+
+          datas = datas.concat(d.data.data);
+        }
+
+        if (d.data.data.count < pageSize) {
+          _this.setData({
+            isLoadMore: false
+          })
+        } else {
+          _this.setData({
+            isLoadMore: true,
+            pageIndex: _this.data.pageIndex += 1,
+          })
+        }
+
+        _this.setData({
+          items: datas
+        })
+        wx.hideNavigationBarLoading();
+        wx.hideLoading();
+      }
+
+    });
+  },
+
+  bunessItemClick: function (event) {
+    console.log('点击商家item', event.currentTarget.dataset.item);
+    let str = JSON.stringify(event.currentTarget.dataset.item);
+    wx.navigateTo({
+      url: '/pages/shop/shop?item=' + str
+    })
+  },
+ 
+  bindKeyInput: function (e) {
+    console.log('搜索数据', e.detail.value);
+    this.setData({
+      name: e.detail.value,
+      items:[]
+    })
+    if (e.detail.value != '' && e.detail.value != undefined) {
+      this.refresh();
+    }
+  },
+
+  //点击热搜的关键词发起搜索
+  hotsearch:function(e){
+    console.log(e.currentTarget.dataset.txt);
+    this.setData({
+      name:e.currentTarget.dataset.txt,
+      items: []
+    })
+    this.refresh();
+  }
+
+})

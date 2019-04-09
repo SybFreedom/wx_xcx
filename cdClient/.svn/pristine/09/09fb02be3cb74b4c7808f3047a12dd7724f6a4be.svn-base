@@ -1,0 +1,201 @@
+// pages/addNewOrEditorAddress/addNewOrEditorAddress.js
+var app = getApp();
+const clientApi = require('../../utils/clientApi.js').clientApi
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    "name":'',
+    "tel":'',
+    "address":'',
+    "detailAddress":'',
+    "addressId": ''
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    
+    if (options.data) {
+      let jsonData = JSON.parse(options.data);
+      var address = '';
+      if (jsonData.phone.length > 0) {
+        address = jsonData.location;
+        app.globalData.temAddress.customAddress = address;
+      }
+      console.log(jsonData.address)
+      this.setData({
+        address: location,
+        name: jsonData.userName,
+        tel: jsonData.phone,
+        detailAddress: jsonData.address,
+        addressId: jsonData.id
+      })
+    }
+
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+      this.setData({
+        address: app.globalData.temAddress.customAddress,
+        location: app.globalData.temAddress.location
+      })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+
+  pushChooseAddress: function(){
+    wx.navigateTo({
+      url: "../../pages/chooseArea/chooseArea?type=0",
+      success: function(res){
+
+      },
+      complete: function (res) {
+
+      }
+    })
+  },
+
+  telName: function (d) {
+    this.data.name = d.detail.value;
+  },
+
+  tel: function (d) {
+    this.data.tel = d.detail.value;
+  },
+
+  address: function (d) {
+    this.data.address = d.detail.value;
+  },
+
+  detailAddress: function (d) {
+    this.data.detailAddress = d.detail.value;
+  },
+
+  //提交
+  commit: function(e){
+    let actionType = e.target.dataset.actiontype;
+    var _this = this;
+    var status = 0;
+    if (actionType == 0 || actionType == 1) {
+      if (this.data.name == '') {
+        wx.showModal({
+          title: '请填写收货人姓名',
+        })
+        return;
+      }
+
+      if (this.data.tel == '') {
+        wx.showModal({
+          title: '请填写联系电话',
+        })
+        return;
+      }
+
+      if (this.data.address == '') {
+        wx.showModal({
+          title: '请选择定位地址',
+        })
+        return;
+      }
+
+      if (this.data.detailAddress == '') {
+        wx.showModal({
+          title: '请填写详细收货地址',
+        })
+        return;
+      }
+
+      status = 1;
+    } else {
+      status = -1;
+    }
+    
+    var parama = {};
+
+    if (this.data.addressId != '') {
+      parama = {
+        id: this.data.addressId,
+        address: this.data.detailAddress,
+        location: this.data.address,
+        userName: this.data.name,
+        phone: this.data.tel,
+        status: status,
+        userId: app.userId,
+        lat: this.data.location.lat,
+        lng: this.data.location.lng
+      };
+    } else {
+      parama = {
+        address: this.data.detailAddress,
+        location: this.data.address,
+        userName: this.data.name,
+        phone: this.data.tel,
+        status: status,
+        userId: app.userId,
+        lat: this.data.location.lat,
+        lng: this.data.location.lng
+      };
+    }
+
+
+    clientApi.editUserAddress(parama).then(d => {
+        if (d.success == 1) {
+          app.globalData.shippingAddress = d.data;
+          wx.navigateBack({
+            
+          })
+        }
+    })
+  }
+})

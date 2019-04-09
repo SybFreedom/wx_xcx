@@ -1,0 +1,168 @@
+// pages/goodsDetail/goodsDetail.js
+var tools = require('../../utils/util.js');
+var app = getApp();
+var WxParse= require('../../libs/wxParse/wxParse.js');
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    item:{},
+    items:"",
+    imgUrls:[
+      { img: '/images/baike_02.jpg' },
+      { img: '/images/testImg_03.png' },
+      { img: '/images/Back_02.png' },
+    ], //轮播图片地址
+    indicatorDots: true,
+    autoplay: true,
+    interval: 3000,
+    duration: 1000,
+    indicatorColor: 'ececec',
+    indicatorActiveColor: 'ffd33a',
+    num:1,  //购买数量
+    shipPrice: 0, 
+    isshow:false,  //是否显示购买数量框
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+   
+    let item = JSON.parse(options.item);
+    let items = JSON.parse(options.items);
+    item.des = app.goodsAttrubuteStr;
+    this.setData({
+      item:item,
+      items:items,
+      shipPrice:options.shipPrice
+    })
+    // console.log(item);
+    var article = item.des ? item.des : "<p>暂无产品描述</p>";
+    var that = this;
+    WxParse.wxParse('article', 'html', article, that, 0);
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    app.goodsAttrubuteStr = null;
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  },
+
+  //点击返回店铺页面
+  goback:function(){
+    wx.navigateBack({
+      
+    })
+  },
+  //点击+或-计算数量
+  gonum:function(e){
+    let f=e.currentTarget.dataset.f;
+    if(f=="+"){
+      this.setData({
+        num: this.data.num + 1
+      });
+    }else if(f=="-"){
+      if(this.data.num>=2){
+        this.setData({
+          num: this.data.num - 1
+        });
+      }
+    }
+  },
+  //点击隐藏购买数量框
+  gohide:function(){
+    this.setData({
+      isshow: false
+    });
+  },
+  //点击立即购买显示购买数量框
+  goshow:function(){
+    this.setData({
+      isshow:true
+    });
+  },
+  //点击提交订单
+  goorder:function(){
+    // wx.showLoading({
+    //   title: '订单提交中',
+    // })
+    // console.log(this.data.num);
+    // console.log(this.data.item);
+    // console.log(this.data.items);
+    // console.log(this.data.shipPrice);
+    if (tools.isEmpty(app.userId)) {
+      console.log('3:::::::::::::::::::::::::::::::', app.userId)
+      wx.showModal({
+        title: '提示！',
+        content: '请检查您的权限是否全部开启,然后尝试删除小程序后，重新授权所有权限',
+      })
+    } else {
+      // var goodsDatas = e.currentTarget.dataset.goodslist;
+      // goodsDatas.forEach(function (obj, index) {
+      //   obj.des = "";
+      // });
+      this.setData({
+        ["item.selectCount"]:this.data.num
+      });
+      let datas = JSON.stringify([this.data.item]);
+      let item = JSON.stringify(this.data.items);
+      wx.setStorage({
+        key: 'orderType',
+        data: '0',
+      })
+      wx.navigateTo({
+        url: '../../pages/submitOrder/submitOrder?datas=' + datas + '&item=' + item + '&shipPrice=' + this.data.shipPrice
+      })
+    }
+
+  }
+
+})

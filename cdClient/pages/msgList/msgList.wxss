@@ -1,0 +1,58 @@
+/* pages/serviceDes/serviceDes.wxss */
+page{
+  background-color: white;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+}
+.item{
+  display: flex;
+  width: 96%;
+  padding: 0 2%;
+  height: auto;
+  flex-direction: column;
+  border-bottom: 2rpx solid #eeeeee;
+}
+.item>view:first-of-type>text:first-of-type{
+  font-size: 14pt;
+  color: #333333;
+  margin: 10rpx 0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap; 
+}
+.item>text:first-of-type{
+  font-size: 10pt;
+  color: #666666;
+  line-height: 40rpx;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2; /*这个数字是设置要显示省略号的行数*/
+  -webkit-box-orient:vertical;
+}
+.item>view{
+  display: flex;
+  justify-content: space-between;
+  margin: 10rpx 0;
+}
+.item>view>text{
+  font-size: 9pt;
+  color: #999999;
+}
+.empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx;
+}
+.empty>image{
+  width: 45%;
+  margin-bottom: 20rpx;
+}
+.empty>text{
+  font-size: 12pt;
+  color: #333333;
+}

@@ -1,0 +1,42 @@
+<view class='container'>
+  <view class='Tab'>
+    <view>
+      <text data-status="2" style="color:{{tabStatus==2?'#FFD33A':'#333333'}}; border-bottom-color: {{tabStatus==2 ? '#ffd33a':'transparent'}}" bindtap='tabSwitch'>店铺</text>
+    </view>
+    <view>
+      <text data-status="1" style="color:{{tabStatus==1?'#FFD33A':'#333333'}}; border-bottom-color: {{tabStatus==1 ? '#ffd33a':'transparent'}}" bindtap='tabSwitch'>商品</text>
+    </view>
+  </view>
+  <view class='commodity' wx:if="{{tabStatus==1}}">
+    <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{items}}" wx:key="" bindtap='goGoodsDetails' data-id="{{item.id}}">
+      <view class="content">
+        <image src='{{item.imgUrl}}'></image>
+        <view>
+          <text>{{item.title}}</text>
+          <text style="font-size: 12pt; color: red;line-height: 50rpx;">￥{{item.price}}</text>
+          <!-- <text>销量:0</text> -->
+        </view>
+      </view>
+      <view class="del" catchtap="del" data-id="{{item.id}}" data-index="{{index}}">删除</view>
+    </view>
+  </view>
+
+  <view class='shops' wx:if="{{tabStatus==2}}">
+    <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{items}}" wx:key="" bindtap='goShop' data-id="{{item.shopId}}">
+      <view class="content">
+        <image src='{{item.imgUrl}}'></image>
+        <view>
+          <text>{{item.title}}</text>
+          <text>联系电话：{{item.tel}}</text>
+          <text>地址：{{item.address}}</text>
+        </view>
+      </view>
+      <view class="del" catchtap="del" data-id="{{item.id}}" data-index="{{index}}">删除</view>
+    </view>
+  </view>
+  
+  <view class='empty' wx:if="{{items==''}}">
+    <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+    <text>您暂时没有收藏哟</text>
+  </view>
+</view>

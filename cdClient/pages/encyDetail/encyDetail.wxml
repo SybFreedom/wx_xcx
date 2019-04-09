@@ -1,0 +1,12 @@
+<view class='containter'>
+  <image src=' http://192.168.0.11:8081/images/{{list[3]}}' mode='widthFix'></image>
+  <view class='list'>
+    <view>
+      <text>{{list[1]}}</text>
+      <text>{{list[2]}}</text>
+    </view>
+  </view>
+  <view class='details' decode="{{true}}" space="{{true}}">
+   {{list[4]}}
+  </view>
+</view>

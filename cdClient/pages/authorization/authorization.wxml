@@ -1,0 +1,6 @@
+<!--pages/authorization/authorization.wxml-->
+<view class='containter'>
+  <button open-type='getUserInfo' bindgetuserinfo="bindgetuserinfo">点击授权使用</button>
+  
+</view>
+

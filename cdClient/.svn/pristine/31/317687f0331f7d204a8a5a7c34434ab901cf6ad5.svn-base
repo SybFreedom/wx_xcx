@@ -1,0 +1,168 @@
+<!--pages/submitOrder/submitOrder.wxml-->
+<view class="scrollBGView" scroll-y="ture" style="height: {{windowHeight - 120}}px; width: {{windowWidth}}px;">
+  <view class="topAddressView">
+    <view class="unselectedAddress">
+      <!--没有收获地址时显示-->
+      <checkbox-group bindchange="checkboxChange" data-index="{{index}}" data-checks="{{item.checks}}">
+          <checkbox data-index="{{index}}" disabled='{{canCheck1}}' id="check1" value='111' checked="true"/>
+          <checkbox data-index="{{index}}" disabled='{{canCheck2}}' id="check2" value='222' checked="true"/>
+      </checkbox-group>
+      <view class='nulladdress' bindtap="chooseAddress">      
+        <view>
+          <image src='/images/orderIcon_03.png' mode='widthFix'></image>
+          <text>接宠</text>
+        </view>
+        <view wx:if="{{addressInfo.userName==''}}">
+          <text>请选择一个接宠地址</text>
+        </view>
+
+        <view wx:if="{{addressInfo.userName!=''}}">
+          <text>{{addressInfo.location}}{{addressInfo.address}}</text>
+          <text class='last' decode='{{true}}'>{{addressInfo.userName}}&nbsp;&nbsp;{{addressInfo.phone}}</text>
+        </view>
+        <view>
+          <image src='/images/orderIcon_05.png' mode='widthFix'></image>
+        </view>
+      </view>  
+      <view class='nulladdress' bindtap="schooseAddress">
+        <view>
+          <image src='/images/orderIcon_09.png' mode='widthFix'></image>
+          <text>送宠</text>
+        </view>
+        <view wx:if="{{saddressInfo.userName==''}}">
+          <text>请选择一个送宠地址</text>
+        </view>
+        <view wx:if="{{saddressInfo.userName!=''}}">
+          <text>{{saddressInfo.location}}{{saddressInfo.address}}</text>
+          <text class='last' decode='{{true}}'>{{saddressInfo.userName}}&nbsp;&nbsp;{{saddressInfo.phone}}</text>
+        </view>
+
+        <view>
+          <image src='/images/orderIcon_05.png' mode='widthFix'></image>
+        </view>
+      </view>
+
+      <!-- <image class="addressIcon" src="../../images/orderIcon_03.png"></image>
+      <view class="addressText">请选择一个接宠地址</view>
+      <image src='../../images/more_choices.png' class="addressChooseImg"></image> -->
+    </view>
+
+    <!--有收货地址后显示-->
+    <!-- <view class="selectedAddress" wx:if="{{addressInfo.userName.length > 0}}">
+      <view class='left'>
+        <view class="nameAndTelView">
+          <image class='icon' src='../../images/harvester.png'></image>
+          <view class="name">{{addressInfo.userName}}</view>
+          <image class='icon' src='../../images/harvest_telephone.png'></image>
+          <view class="tel">{{addressInfo.phone}}</view>
+        </view>
+
+        <view class='nameAndTelView'>
+          <image class='icon' src='../../images/harvest_address.png'></image>
+          <view class="detailAddress">{{addressInfo.location}}{{addressInfo.address}}</view>
+        </view>
+      </view> -->
+
+
+      <!-- <image src='../../images/more_choices.png' class="addressChooseImg"></image>
+
+    </view> -->
+
+  </view>
+  <!-- <image class="topCutView" src="../../images/line-color.png"></image> -->
+  <view class="sectionHeaderView">
+    <view class='chooseTimeView'>
+      <!-- <view class='newnote'>选择接送时间(点击黄色时间选择，不选择默认即接即送)</view> -->
+
+      <view class='chooseTimeItem' style='display:{{jdisplay}}'>
+        <view>接宠时间</view>  
+        <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}"> 
+            <view class="pickerShow">
+              <view class='itemicon'>
+                <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+              </view>
+              <view class='time'>
+                <text>{{startTime}}</text>
+              </view>              
+            </view>
+          </picker>
+      </view>
+
+      <view class='chooseTimeItem' style='display:{{sdisplay}}'>
+        <view>送宠时间</view>  
+          <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">            
+            <view class="pickerShow">
+              <view class='itemicon'>
+                <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+              </view>
+              <view class='time'>
+                <text>{{endTime}}</text>
+              </view>
+            </view>
+          </picker>
+      </view>
+      
+    </view>
+    <view class='error'>
+      <image src='/images/tubiao_03.png' mode='widthFix'></image>
+      <text>点击黄色时间选择，不选择默认即接即送。</text>
+    </view>
+  </view>
+
+  <view class="goodsListView"  scroll-y="true">
+    <view class='shopname' wx:if="{{orderType!=4}}">
+      <image class="sectionHeaderViewIcon" src="{{item.logo}}"></image>
+      <text class="sectionHeaderViewText">{{item.name}}</text>
+    </view>
+
+    <view class="goodsItemView" wx:for="{{selectedGoodList}}" wx:key="*this" data-item="{{item}}" wx:if="{{orderType!=4}}">
+      <view>
+        <image src="{{item.icon}}" mode='widthFix'></image>
+      </view>
+      <view>
+        <view class="goodsItemText1">{{item.name}}</view>
+        <view class="goodsItemText3">￥{{item.price}}</view>
+        <view class="goodsItemText2">x {{item.selectCount}}</view>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+
+    <view class="cutView"></view>
+    <view class='goodsItemViewWrap'>
+      <view class="goodsItemView2">
+        <image src='/images/orderIcon_19.png' mode='widthFix'></image>
+        <view class="goodsItemText1">配送费</view>
+        <view class="goodsItemText3">￥{{shipPrice}}</view>
+      </view>
+
+      <!--<view class="goodsItemView2">
+        <image src='/images/orderIcon_22.png' mode='widthFix'></image>
+        <view class="goodsItemText1">{{firstInfo.isFirst == 1 ? '优惠减免' : '优惠减免(已使用)'}}</view>
+        <view class="goodsItemText3">￥{{firstInfo.isFirst == 1 ? -firstInfo.firstMoney *1 : 0}}</view>
+      </view>-->
+    </view>
+    <view class='countsline'>
+      <text>宠物数量：</text>
+      <view class='iconfont iconfont_minus' bindtap='minuscount'></view>
+      <text>{{pet_count}}</text>
+      <view class='iconfont iconfont_add' bindtap='addcount'></view>
+    </view>
+    <!-- <view class="cutView"></view> -->
+    <view class="note">备注:</view>
+    <textarea class="note1" bindinput="input" placeholder="买家留言" />
+  </view>
+</view>
+<!-- <button bindtap='showitem'>点我</button> -->
+
+<view class="bottomView">
+  <view class='bottomLeft'>
+    <image src='/images/shopCaricon_03.png' mode='widthFix'></image>
+    <view class='priceDes'>
+      <view class="title">￥{{totalPrice}}</view>
+      <view class="subtitle">含配送费:￥{{shipPrice}}</view>
+    </view>
+  </view>
+  <view bindtap="commitBtClick" class="commigBt">去支付</view>
+</view>

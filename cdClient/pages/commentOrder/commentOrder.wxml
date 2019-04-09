@@ -1,0 +1,30 @@
+<!--pages/commentOrder/commentOrder.wxml-->
+<textarea bindinput="bindinput" class="textarea" placeholder="在这里输入你的评价哦" />
+<view class="evalueBgView" wx:for="{{evaluesList}}" wx:for-item="evalueItem">
+     <view class="evalueDes">{{evalueItem.des}}</view>
+     <view class="startBgView" >
+          <image class="evalueIcon" wx:for="{{evalueItem.stars}}" wx:for-item="iconItem" catchtap="starOnlick" data-startype="{{evalueItem.starType}}" data-index="{{index}}" src="{{iconItem}}"></image>
+     </view>
+</view>
+  <view class='uploadimg'>
+    <view class='blockimg' wx:if="{{uploadlist != ''}}">
+      <view wx:for="{{uploadlist}}" wx:key="{{index}}">
+        <image src='{{item}}'></image>
+        <text data-index="{{index}}" bindtap='deleteimg'>-</text>
+      </view>
+      <view class='openimg' bindtap='openimg'>
+        <image src='/images/uploadimg.png' mode='widthFix' style='width:100rpx'></image>
+      </view>
+    </view>
+    
+    <view class='nullimg' wx:if="{{uploadlist == ''}}">
+      <view class='openimg' bindtap='openimg'>
+        <image src='/images/uploadimg.png' mode='widthFix'></image>
+      </view>
+      <view>
+        <text>上传图片</text>
+      </view>
+    </view>
+    
+  </view>
+<button class="commitBt" bindtap="commitComment">提交</button>

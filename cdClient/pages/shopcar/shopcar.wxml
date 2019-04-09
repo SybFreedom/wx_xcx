@@ -1,0 +1,54 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='shoplist'>
+    <scroll-view class='shoptlistitem' scroll-y="true">
+    <block wx:for="{{shoplist}}" wx:key="index">
+      <view class='item'>
+        <image class='selecticon' id='{{index}}' data-id="{{index}}" data-index="{{index}}" src="{{item.ischecked?'/images/yes-select.png':'/images/no-select.png'}}" bindtap='select' mode='widthFix' />
+        <view class='itemright'>
+          <navigator url='/pages/details/details'>
+            <image src='{{item.imgurl}}' mode='widthFix' />
+          </navigator>
+          
+          <view>
+            <navigator url='/pages/details/details'>
+              <text>{{item.title}}</text>
+              <text>主要颜色：{{item.color}}、尺码：{{item.size}}</text>
+            </navigator>  
+            <view>
+              <text>￥{{item.price}}</text>
+              <view>
+                <text data-addorreduce="-" style="background-color:{{item.gray?'#F4F3F8':'#ffffff'}}" bindtap='numberadd' id='{{index}}'>-</text>
+                <text>{{item.number}}</text>
+                <text data-addorreduce="+" bindtap='numberadd' id='{{index}}'>+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>  
+    </scroll-view>
+    <view class='all'>
+      <view bindtap='allselected'>
+        <image src="{{isselected?'/images/yes-select.png':'/images/no-select.png'}}" mode='widthFix'></image>
+        <text>全选</text>
+      </view>
+      <view>
+        <text>合计：￥{{sumprice}}</text>
+        <navigator bindtap='gobalance'>
+          <text>去结算</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+
+
+  <view class='nullcar' style="display:{{isshow}}">
+    <image src='/images/nullshopcar_03.png' mode='widthFix'></image>
+    <text>购物车还是空的</text>
+    <navigator url='/pages/index/index' open-type='switchTab'>
+      <text>去逛逛</text>
+    </navigator>
+  </view>
+</view>

@@ -1,0 +1,22 @@
+<!--pages/myShippingAddress/myShippingAddress.wxml-->
+<view class="addressList" style="height: {{windowHeight}}px; width: {{windowWidth}}px;">
+  <scroll-view class="listView">
+    <view class="item" bindtap="chooseItem" data-index="{{index}}" wx:for="{{list}}" wx:key="item.">
+      <view class="selectedAddress">
+        <view class='left'>
+          <text>{{item.userName}}</text>
+          <text>{{item.phone}}</text>
+          <text>{{item.location}}{{item.address}}</text>
+        </view>
+        <view class="rightView">
+          <image class="editor" catchtap="editor" data-index="{{index}}" src="../../images/btn_edit.png"></image>
+        </view>
+
+      </view>
+
+    </view>
+
+  </scroll-view>
+
+  <view class='addNewAddressView' catchtap="addNewOrEditorAddress">新增收货地址</view>
+</view>

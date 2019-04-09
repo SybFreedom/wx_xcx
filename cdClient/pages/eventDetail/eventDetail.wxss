@@ -1,0 +1,7 @@
+/* pages/eventDetail/eventDetail.wxss */
+page{
+  background-color: white
+}
+image{
+  width: 750rpx;
+}

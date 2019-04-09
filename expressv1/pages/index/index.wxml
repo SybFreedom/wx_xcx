@@ -1,0 +1,37 @@
+<!-- login page -->
+<view class='father'>
+<!-- 头部logo--开始 -->
+  <view class='logo'>
+    <image src='../../img/logo.png' mode='widthFix'></image>
+    <!-- <text>配送端</text> -->
+  </view>
+<!-- 头部logo--结束 -->
+
+<!-- 中部操作---开始 -->
+  <view class='action'>
+    <!-- 登陆账号 -->
+    <view class='account'>
+      <text>账号</text>
+      <input type='text' placeholder-class='placeholder' placeholder='请输入账号' bindinput='updateaccount'></input>
+    </view>
+    <!-- 登陆密码 -->
+    <view class='account' style='margin-top:30rpx;'>
+      <text>密码</text>
+      <input type='password' placeholder-class='placeholder' placeholder='请输入密码' bindinput='updatepassword'></input>
+    </view>
+    <!-- 忘记密码and注册账号---开始 -->
+    <!-- <view class='reFor'>
+      <text>忘记密码</text>
+      <text>注册</text>
+    </view> -->
+    <!-- 忘记密码and注册账号---结束 -->
+  </view>
+<!-- 中部操作---结束 -->
+
+<!-- 底部按钮---开始 -->
+  <view class='btn'>
+    <button bindtap='gologin'>登陆</button>
+    <!-- <button bindtap='register'>注册</button> -->
+  </view>
+<!-- 底部按钮---结束 -->
+</view>

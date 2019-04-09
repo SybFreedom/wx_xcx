@@ -1,0 +1,28 @@
+page{
+    background-color: #FFFFFF;
+}
+
+.shareBt{
+  position: fixed;
+  background-color: #FFD328;
+  color: #333333;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 100%;
+  margin-right: 10%;
+  line-height: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+.testBgView{
+  width: 700rpx;
+  background-color: red;
+}
+
+.testBgView1{
+  width: 50rpx;
+  background-color: green;
+
+}

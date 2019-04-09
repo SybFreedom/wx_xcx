@@ -1,0 +1,19 @@
+<view class='containter'>
+  <view class='list'>
+    <block wx:for="{{list}}" wx:key="{{index}}">
+      <view>
+        <view>
+          <text>{{item.comment}}</text>
+          <text>{{item.createdate}}</text>
+        </view>
+        <view>
+          <text>{{item.zt}}{{item.money}}</text>
+        </view>
+      </view>
+    </block>  
+  </view>
+  <view class='empty' wx:if="{{list==''}}">
+    <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+    <text>您暂时没有充值记录</text>
+  </view>
+</view>

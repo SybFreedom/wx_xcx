@@ -1,0 +1,119 @@
+const request = require('../utils/kad.request.js')
+const linq = require('../libs/linq.min.js').linq
+
+const URI = 'http://192.168.0.11:8080/mobile/';
+
+/**
+ * 每一个页面对应一个contoller
+ */
+class ClientApi {
+
+/**
+ * 首页banner图
+ */
+  getBanner() {
+    return request.get(`${URI}getBanner.do`).then(res => res.data)
+  }
+
+  getShopById(params) {
+    return request.get(`${URI}getShopById.do`, params).then(res => res.data)
+  }
+
+   getOpenCityList() {
+     return request.get(`${URI}getOpenCity.do`).then(res => res.data)
+   }
+
+/**
+ * 宠物分类图标接口
+ */
+   getModules() {
+     return request.get(`${URI}getModule.do`).then(res => res.data)
+   }
+
+   getShop(params) {
+     return request.get(`${URI}getShop.do`,params).then(res =>    res.data)
+   }
+
+   getShopGoods(params) {
+     return request.get(`${URI}getShopGoods.do`, params).then(res => res.data)
+   }
+
+   getShopClassAllGoods(params) {
+     return request.get(`${URI}getShopGoodsType.do`, params).then(res => res.data)
+   }
+
+   bindUser(params) {
+     return request.get(`${URI}bindUser.do`, params).then(res => res.data)
+   }
+
+   editUserAddress (params) {
+     return request.get(`${URI}editUserAddress.do`, params).then(res => res.data)
+   }
+
+   getUserAddress(params) {
+     return request.get(`${URI}getUserAddress.do`, params).then(res => res.data)
+   }
+
+   addOrder(params) {
+     return request.get(`${URI}addOrder.do`, params).then(res => res.data)
+   }
+
+   getOrderList(param){
+     return request.get(`${URI}getOrderList.do`, param).then(res => res.data)
+   }
+
+   applyRefund(param) {
+     return request.get(`${URI}applyRefund.do`, param).then(res => res.data)
+   }
+
+   sureOrder(param) {
+     return request.get(`${URI}sureOrder.do`, param).then(res => res.data)
+   }
+   
+   delOrder(param) {
+     return request.get(`${URI}delOrder.do`, param).then(res => res.data)
+   }
+
+   evalOrder(param) {
+     return request.get(`${URI}evalOrder.do`, param).then(res => res.data)
+   }
+
+   getShopEval(param) {
+     return request.get(`${URI}getShopEval.do`, param).then(res => res.data)
+   }
+
+  getFooterList(data) {
+    var list = linq.From(data)
+      .Where(function (x) { return x.Sort > 1 })
+      .OrderBy(function (x) { return x.Text })
+      .ToArray();
+    return list;
+  }
+
+  getIndexGuess(pageIndex, pageSize) {
+    return request.get(`${URI}//DataPlatform/GetIndexGuessLikeProducts?siteid=40&pageIndex=${pageIndex}&pageSize=${pageSize}`).then(res => res.data)
+  }
+
+  getUserFirstPayInfo(param) {
+    return request.get(`${URI}checkIsFirstOrder.do`, param).then(res => res.data)
+  }
+
+  //宠物百科接口
+  getWikiList(param){
+    return request.get(`${URI}getWikiList`).then(res => res.data)
+  }
+  getWiki(param) {
+    return request.get(`${URI}getWiki`).then(res => res.data)
+  }
+
+}
+/**
+ * 实例化对象
+ */
+let clientApi = new ClientApi();
+/**
+ * 暴露对象，无需每次都加函数名
+ */
+module.exports = {
+  clientApi: clientApi
+}

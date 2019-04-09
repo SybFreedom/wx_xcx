@@ -1,0 +1,24 @@
+<!--pages/serviceDes/serviceDes.wxml-->
+<view class="container">
+  <view wx:for="{{msgList}}" wx:key="{{index}}" class='item' bindtap='goMsgDetails' data-item="{{item}}">
+    <view>
+      <text>{{item.title}}</text>
+      <text wx:if="{{item.status==0}}" style='color:red'>未读</text>
+      <text wx:if="{{item.status==1}}" style='color:#FFD33A'>已读</text>
+    </view>
+    
+    <text>{{item.content}}</text>
+    <view>
+      <text>{{item.createdate}}</text>
+      <text wx:if="{{item.type==0}}">来源：系统</text>
+      <text wx:if="{{item.type==1}}">来源：市场</text>
+      <text wx:if="{{item.type==2}}">来源：管理员</text>
+      <text wx:if="{{item.type==3}}">来源：区域管理员</text>
+    </view>
+  </view>
+</view>
+
+<view class='empty' wx:if="{{msgList==''}}">
+    <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+    <text>您暂时没有消息哟</text>
+</view>

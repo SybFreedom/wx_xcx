@@ -1,0 +1,92 @@
+page{
+    background-color: #FFFFFF;
+}
+
+.shareBt{
+  position: fixed;
+  background-color: #FFD328;
+  color: #333333;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 100%;
+  margin-right: 10%;
+  line-height: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+.testBgView{
+  width: 700rpx;
+  background-color: red;
+}
+
+.testBgView1{
+  width: 50rpx;
+  background-color: green;
+
+}
+.container{
+  flex: 1;
+}
+.container>view{
+  width: 100%;
+  height: 600rpx;
+  background-color: #21AEFE;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.container>view>image{
+  width: 15%;
+}
+.container>view>view{
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-between;
+  margin-top:50rpx;
+}
+.container>view>text{
+  font-size: 12pt;
+  color: #ffffff;
+}
+.container>view>text:first-of-type{
+  margin: 20rpx 0;
+}
+.container>view>view>navigator{
+  width: 45%;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 40rpx;
+}
+.container>view>view>navigator:first-of-type{
+  color: #ffffff;
+  border: 1rpx solid #ffffff;
+}
+.container>view>view>navigator:last-of-type{
+  color: #333333;
+  background-color: #C1E8FF;
+  border: 1rpx solid #C1E8FF;
+}
+.container>view>view>navigator>text{
+  font-size: 13pt;
+  
+}
+.container>view>button{
+  width: 70%;
+  position: absolute;
+  height: 90rpx;
+  line-height: 90rpx;
+  bottom: -45rpx;
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  border: 1rpx solid #E9E9E9;
+}
+.container>view>button>text{
+  font-size: 13pt;
+  color: #FF4848;
+}

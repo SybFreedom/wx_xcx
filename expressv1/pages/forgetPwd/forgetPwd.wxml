@@ -1,0 +1,36 @@
+<!-- login page -->
+<view class='father'>
+<!-- 头部logo--开始 -->
+  <view class='logo'>
+    <image src='../../img/logo.png'></image>
+    <text>配送端</text>
+  </view>
+<!-- 头部logo--结束 -->
+
+<!-- 中部操作---开始 -->
+  <view class='action'>
+    <!-- 登陆账号 -->
+    <view class='account'>
+      <text>账号</text>
+      <input type='text' placeholder-class='placeholder' placeholder='请输入账号'></input>
+    </view>
+    <!-- 登陆密码 -->
+    <view class='account' style='margin-top:30rpx;'>
+      <text>密码</text>
+      <input type='password' placeholder-class='placeholder' placeholder='请输入密码'></input>
+    </view>
+    <!-- 注册验证码 -->
+    <view class='account' style='margin-top:30rpx;'>
+      <text>验证码</text>
+      <input type='text' style='width:30%;' placeholder-class='placeholder' placeholder='请输入验证码'></input>
+      <button class='btn'>获取验证码</button>
+    </view>
+  </view>
+<!-- 中部操作---结束 -->
+
+<!-- 底部按钮---开始 -->
+  <view class='btn'>
+    <button>确定</button>
+  </view>
+<!-- 底部按钮---结束 -->
+</view>

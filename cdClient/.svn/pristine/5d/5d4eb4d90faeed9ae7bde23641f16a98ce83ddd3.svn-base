@@ -1,0 +1,26 @@
+<!--pages/chooseArea/chooseArea.wxml-->
+<scroll-view class="bgSrollView">
+  <view class="topView">
+    <input class="topSerachView" placeholder="搜索商家、商品名称" bindinput="bindKeyInput" />
+  </view>
+
+  <view class="addressSection">当前地址</view>
+  <view class="newAddressBGView">
+    <view class="address" catchtap="chooseUserLocation">{{address.name}}</view>
+    <view class="address" catchtap="postionUserLocation">重新定位</view>
+  </view>
+
+
+  <view wx:if="{{chooseType == 1}}" class="addressSection">开放城市</view>
+  <view wx:if="{{chooseType == 1}}" class="openListView">
+    <view bindtap="openItemClick" data-openItem="{{item}}" wx:for="{{openList}}" class="openItem">{{item.city}}</view>
+  </view>
+
+
+  <view class="addressSection">搜索地址</view>
+  <view class="searchItem" data-id="{{index}}" wx:for="{{searchResult}}" wx:key="id" catchtap="itemClick">
+    <text class="titleText">{{item.title}}</text>
+    <text class="detailText">{{item.address}}</text>
+    <view class="cutView"></view>
+  </view>
+</scroll-view>

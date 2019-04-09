@@ -1,0 +1,302 @@
+<!--pages/submitOrder/submitOrder.wxml-->
+<view class="scrollBGView" scroll-y="ture" style="height: {{windowHeight - 120}}px; width: {{windowWidth}}px;">
+  
+  <!-- <view class='Tab'>
+    
+    <view>
+      <text data-status="2" style="color:{{tabStatus==2?'#FFD33A':'#333333'}}; border-bottom-color: {{tabStatus==2 ? '#ffd33a':'transparent'}}" bindtap='tabSwitch'>双程</text>
+    </view>
+    <view>
+      <text data-status="1" style="color:{{tabStatus==1?'#FFD33A':'#333333'}}; border-bottom-color: {{tabStatus==1 ? '#ffd33a':'transparent'}}" bindtap='tabSwitch'>单程</text>
+    </view>
+  </view> -->
+  
+  <!-- <view class="topAddressView" wx:if="{{tabStatus==1}}">
+    <view class="unselectedAddress">
+        <view class='nulladdress margin_left' style='width:95%;' bindtap="chooseAddress">
+          <view>
+            <image src='/images/orderIcon_03.png' mode='widthFix'></image>
+            <text>服务</text>
+          </view>
+          <view wx:if="{{addressInfo.userName==''}}">
+            <text>请选择一个服务地址</text>
+          </view>
+          <view wx:if="{{addressInfo.userName!=''}}">
+            <text>{{addressInfo.location}}{{addressInfo.address}}</text>
+            <text class='last' decode='{{true}}'>{{addressInfo.userName}}&nbsp;&nbsp;{{addressInfo.phone}}</text>
+          </view>
+          <view>
+            <image src='/images/orderIcon_05.png' mode='widthFix'></image>
+          </view>
+        </view>  
+      </view>
+  </view> -->
+
+  <!-- <view class='radio' wx:if="{{tabStatus==1}}">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <text>接或送服务:</text>
+      <label class="radio4" wx:for="{{radio}}" wx:key="{{index}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}"/>
+        <text class='txt'>{{item.value}}</text>
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="topAddressView" wx:if="{{tabStatus==2}}">
+    <view class="unselectedAddress">
+      <view class='nulladdress' bindtap="chooseAddress">      
+        <view>
+          <image src='/images/orderIcon_03.png' mode='widthFix'></image>
+          <text>{{isShowBackAddress?'接宠':'接送'}}</text>
+        </view>
+        <view wx:if="{{addressInfo.userName==''}}">
+          <text>请选择一个{{isShowBackAddress?'接宠':'接送'}}地址</text>
+        </view>
+
+        <view wx:if="{{addressInfo.userName!=''}}">
+          <text>{{addressInfo.location}}{{addressInfo.address}}</text>
+          <text class='last' decode='{{true}}'>{{addressInfo.userName}}&nbsp;&nbsp;{{addressInfo.phone}}</text>
+        </view>
+        <view>
+          <image src='/images/orderIcon_05.png' mode='widthFix'></image>
+        </view>
+      </view>  
+      <view class='nulladdress' bindtap="schooseAddress" wx:if="{{isShowBackAddress}}">
+        <view>
+          <image src='/images/orderIcon_09.png' mode='widthFix'></image>
+          <text>送宠</text>
+        </view>
+        <view wx:if="{{saddressInfo.userName==''}}">
+          <text>请选择一个送宠地址</text>
+        </view>
+        <view wx:if="{{saddressInfo.userName!=''}}">
+          <text>{{saddressInfo.location}}{{saddressInfo.address}}</text>
+          <text class='last' decode='{{true}}'>{{saddressInfo.userName}}&nbsp;&nbsp;{{saddressInfo.phone}}</text>
+        </view>
+
+        <view>
+          <image src='/images/orderIcon_05.png' mode='widthFix'></image>
+        </view>
+      </view> -->
+
+      <!-- <image class="addressIcon" src="../../images/orderIcon_03.png"></image>
+      <view class="addressText">请选择一个接宠地址</view>
+      <image src='../../images/more_choices.png' class="addressChooseImg"></image> -->
+    <!-- </view> -->
+
+    <!--有收货地址后显示-->
+    <!-- <view class="selectedAddress" wx:if="{{addressInfo.userName.length > 0}}">
+      <view class='left'>
+        <view class="nameAndTelView">
+          <image class='icon' src='../../images/harvester.png'></image>
+          <view class="name">{{addressInfo.userName}}</view>
+          <image class='icon' src='../../images/harvest_telephone.png'></image>
+          <view class="tel">{{addressInfo.phone}}</view>
+        </view>
+
+        <view class='nameAndTelView'>
+          <image class='icon' src='../../images/harvest_address.png'></image>
+          <view class="detailAddress">{{addressInfo.location}}{{addressInfo.address}}</view>
+        </view>
+      </view> -->
+
+
+      <!-- <image src='../../images/more_choices.png' class="addressChooseImg"></image>
+
+    </view> -->
+
+  <!-- </view> -->
+  <!-- <image class="topCutView" src="../../images/line-color.png"></image> -->
+  <!-- 接送地址不一致？ -->
+  <!-- <view class='goBack' wx:if="{{tabStatus==2}}">
+    <text>送回地址和接宠地址不一致？</text>
+    <text bindtap='showBackAddress'>点击修改送回地址</text>
+  </view>
+
+
+  <view class="sectionHeaderView" wx:if="{{tabStatus==1}}">
+    <view class='chooseTimeView'> -->
+      <!-- <view class='newnote'>选择接送时间(点击黄色时间选择，不选择默认即接即送)</view> -->
+
+      <!-- <view class='chooseTimeItem'>
+        <view>服务时间</view>  
+        <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}"> 
+            <view class="pickerShow">
+              <view class='itemicon'>
+                <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+              </view>
+              <view class='time'>
+                <text>{{startTime}}</text>
+              </view>              
+            </view>
+          </picker>
+      </view>      
+    </view>
+    <view class='error'>
+      <image src='/images/tubiao_03.png' mode='widthFix'></image>
+      <text>点击黄色时间选择，不选择默认即接即送。</text>
+    </view>
+  </view> -->
+
+  <!-- <view class="sectionHeaderView" wx:if="{{tabStatus==2}}">
+    <view class='chooseTimeView'> -->
+      <!-- <view class='newnote'>选择接送时间(点击黄色时间选择，不选择默认即接即送)</view> -->
+
+      <!-- <view class='chooseTimeItem'>
+        <view>接宠时间</view>  
+        <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}"> 
+            <view class="pickerShow">
+              <view class='itemicon'>
+                <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+              </view>
+              <view class='time'>
+                <text>{{startTime}}</text>
+              </view>              
+            </view>
+          </picker>
+      </view>
+
+      <view class='chooseTimeItem'>
+        <view>送宠时间</view>  
+          <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">            
+            <view class="pickerShow">
+              <view class='itemicon'>
+                <image src='/images/orderIcon_12.png' mode='widthFix'></image>
+              </view>
+              <view class='time'>
+                <text>{{endTime}}</text>
+              </view>
+            </view>
+          </picker>
+      </view> -->
+      
+    <!-- </view>
+    <view class='error'>
+      <image src='/images/tubiao_03.png' mode='widthFix'></image>
+      <text>点击黄色时间选择，不选择默认即接即送。</text>
+    </view>
+  </view>
+
+  <view class='ispeople'>
+    <radio-group class="radio-group" bindchange="peopleChange">
+      <text>主人跟车仅限1人</text>
+     
+    </radio-group>
+  </view> -->
+
+  <view class="goodsListView"  scroll-y="true">
+    <view class='shopname'>
+      <image class="sectionHeaderViewIcon" src="{{item.logo}}"></image>
+      <text class="sectionHeaderViewText">{{item.name}}</text>
+    </view>
+
+    <view class="goodsItemView" wx:for="{{selectedGoodList}}" wx:key="*this" data-item="{{item}}">
+      <view>
+        <image src="{{item.icon}}" mode='widthFix'></image>
+      </view>
+      <view>
+        <view class="goodsItemText1">{{item.name}}</view>
+        <view class="goodsItemText3">
+          <text wx:if="{{item.discount==0 || item.discount==null}}">{{item.price}}</text>
+          <text wx:else>￥{{item.price*item.discount/10}}</text>
+          <text style="font-size:9pt; color:#606060; font-weight:normal; text-decoration:line-through; margin-left:10rpx">￥{{item.price}}</text>
+        </view>
+        <view class="goodsItemText2">x {{item.selectCount}}</view>
+      </view>
+      <view>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+    <view class="cutView"></view>
+
+    <!-- <view class='goodsItemView' style='height:50rpx;' bindtap='gocards' data-cardtype='1'>
+      <view>
+        <text wx:if="{{serviceCard == null}}" style='font-size:10pt; color:red;'>使用配送优惠券</text>
+        <text style='color:red'>{{serviceCard[5]}}</text>
+      </view>
+      <view style='width:3%'>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view>
+
+    <view class='goodsItemView' style='height:50rpx;' bindtap='gocards' data-cardtype='2'>
+      <view>
+        <text wx:if="{{goodsCard == null}}" style='font-size:10pt; color:red;'>使用商品及服务优惠券</text>
+        <text style='color:red'>{{goodsCard[5]}}</text>
+      </view>
+      <view style='width:3%'>
+        <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+      </view>
+    </view> -->
+
+    <!-- <view class='top'>
+      <view>
+        <text>使用余额</text>
+        <text style='color:red'>可用余额{{userMoney}}</text>
+      </view>
+      <view>
+        <input type='number' bindinput='updateprice' placeholder='请输入您要使用的金额'></input>
+        <view bindtap='goSubmit' style="background-color:{{status?'#FFD141':'#CECECE'}}">确认</view>
+      </view>
+    </view>   -->
+    
+
+    <!-- <view class='goodsItemViewWrap'>
+      <view class="goodsItemView2">
+        <image src='/images/orderIcon_19.png' mode='widthFix'></image>
+        <view class="goodsItemText1">配送费</view>
+        <view class="goodsItemText3">￥{{disfee}}</view>
+      </view>
+
+      <view class="goodsItemView2">
+        <image src='/images/orderIcon_22.png' mode='widthFix'></image>
+        <view class="goodsItemText1">优惠减免</view>
+        <view class="goodsItemText3">￥{{jm}}</view>
+      </view>
+    </view> -->
+    <!-- <view class='useBalance'>
+      <checkbox-group bindchange="BalancecheckboxChange">
+        <label>
+          <checkbox value="{{true}}" />
+          <text>使用余额支付</text>
+          <text>可用余额{{userMoney}}</text>
+        </label>
+      </checkbox-group>
+    </view> -->
+    <!-- <view class='countsline'>
+      <text>宠物数量：</text>
+      <view class='iconfont iconfont_minus' bindtap='minuscount'></view>
+      <text>{{pet_count}}</text>
+      <view class='iconfont iconfont_add' bindtap='addcount'></view>
+    </view> -->
+    
+    <!-- <view class="cutView"></view> -->
+    <view class="note">备注:</view>
+    <textarea class="note1" bindinput="input" placeholder="买家留言" />
+  </view>
+  <view class='treaty'> 
+  <!-- <radio-group class="radio-group" bindchange="treatyChange">
+    <label class="radio4">
+      <radio value="{{true}}"/>
+    </label>
+    <view class='txt' style='display:inline'>
+      我已阅读并同意
+      <text style='color:#FFD302;' bindtap='goTreaty'>宠物服务条约</text>
+    </view>
+  </radio-group> -->
+</view>
+</view>
+
+
+<!-- <button bindtap='showitem'>点我</button> -->
+
+<view class="bottomView">
+  <view class='bottomLeft'>
+    <image src='/images/shopCaricon_03.png' mode='widthFix'></image>
+    <view class='priceDes'>
+      <view class="title">￥{{totalPrice}}</view>
+      <view class="subtitle">含配送费:￥{{disfee}}</view>
+    </view>
+  </view>
+  <view bindtap="commitBtClick" class="commigBt">去支付</view>
+</view>

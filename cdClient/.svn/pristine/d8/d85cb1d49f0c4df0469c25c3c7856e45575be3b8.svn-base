@@ -1,0 +1,152 @@
+// pages/commentOrder/commentOrder.js
+var app = getApp();
+const clientApi = require('../../utils/clientApi.js').clientApi
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    content:'',
+    orderItem:{},
+    evaluesList:[{starValue:5,starType:0,des:'服务态度',
+      stars: ['../../images/starH.png', '../../images/starH.png', '../../images/starH.png', '../../images/starH.png', '../../images/starH.png']
+    }],
+    uploadlist:[], 
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let orderItem = JSON.parse(options.item);
+    this.data.orderItem = orderItem;
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+
+  bindinput: function (d){
+    this.data.content = d.detail.value;
+  },
+
+  starOnlick: function (e){
+   var dataIndex = e.target.dataset.index + 1;
+   var starType = e.target.dataset.startype;
+   var stars = [];
+   this.data.evaluesList[starType].stars.forEach(function (value, index, array) {
+
+     if (dataIndex -1 < index) {
+       stars.push('../../images/starN.png');
+     } else {
+       stars.push('../../images/starH.png');
+     }
+   });
+   this.data.evaluesList[starType].stars = stars;
+   this.data.evaluesList[starType].starValue = dataIndex;
+   this.setData({
+     evaluesList: this.data.evaluesList
+   })
+  },
+  commitComment: function (){
+
+    if (this.data.content == ''){
+      wx.showModal({
+        title: '提示！',
+        content: '评价正文不能为空！',
+      })
+      return;
+    }
+
+    clientApi.evalOrder({ content:this.data.content,
+      grade: this.data.evaluesList[0].starValue,
+      orderId: this.data.orderItem.id}).then(d => {
+          if(d.success == 1){
+            wx.showToast({
+              title: '评论成功',
+            })
+            wx.navigateBack({
+              
+            })
+          }
+      })
+  },
+  //选择相册图片
+  openimg:function(){
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],  //可选择原图或压缩后的图片
+      sourceType: ['album', 'camera'], //可选择性开放访问相册、相机
+      success: res => {
+        // console.log(res.tempFilePaths);
+        if(this.data.uploadlist.length>0){
+          this.setData({
+            uploadlist:this.data.uploadlist.concat(res.tempFilePaths)
+          });
+        }else{
+          this.setData({
+            uploadlist: res.tempFilePaths
+          });
+        }
+        
+      }
+    })
+    
+  },
+  //删除图片
+  deleteimg:function(e){
+    let index=e.currentTarget.dataset.index;
+    this.data.uploadlist.splice(index,1);
+    this.setData({
+      uploadlist:this.data.uploadlist
+    });
+  }
+})

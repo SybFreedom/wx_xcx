@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "配送信息",
+  "usingComponents": {
+    "i-steps": "../../dist/steps/index",
+    "i-step": "../../dist/step/index"
+  }
+}

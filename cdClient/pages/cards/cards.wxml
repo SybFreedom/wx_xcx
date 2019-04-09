@@ -1,0 +1,80 @@
+<view class='containter'>
+  <view class='wrap'>
+    <!-- <view wx:if="{{item!=''}}">
+      <image src='/images/what.png' mode='widthFix'></image>
+      <text>友情提示：单个订单每次只能使用一张优惠券</text>
+    </view> -->
+    <view>
+      <text class='Title' wx:if="{{userGift[0]['id']}}">大礼包</text>
+      <block wx:for="{{userGift}}" wx:key="{{index}}">
+        <view class='ticketBack' bindtap='goGiftDetails' data-item="{{item}}">
+          <text>大礼包</text>
+          <image src='/images/gift_black.png' mode='widthFix'></image>
+          <view>
+            <image src='/images/giftIcon_03.png' mode='widthFix'></image>
+            <view>
+              <view>
+                <text>{{item.displayprice}}</text>
+                <text>￥</text>
+              </view>
+              <text>{{item.name}}</text>
+            </view>
+            <view class='btn giftBtn' catchtap='UseGift' data-item="{{item}}">
+              <text>点击使用</text>
+            </view>
+          </view>
+          <view>
+            <text>可用时间：</text>
+            <text>{{item.startdate}}——{{item.enddate}}</text>
+          </view>
+          <view>
+            <text>X{{item.count}}</text>
+          </view>
+        </view>
+      </block>
+      <text class='Title' wx:if="{{isShowCardTitle[0]==true}}">配送费优惠券</text>
+      <block wx:for="{{item}}" wx:key="{{index}}" wx:if="{{item.type==1||item.type==3||item.type==4}}">
+        <view class='newTicket'>
+          <text>{{item.disPlayPrice}}元</text>
+          <view>
+            <text style='font-size: 32rpx;'>养宠有道</text>
+            <text>·{{item.startDate}}至{{item.endDate}}</text>
+            <text>·仅购买商品或者选择服务后使用</text>
+            <text wx:if="{{item.type==3}}">·仅双程接送使用</text>
+            <text wx:if="{{item.type==4}}">·仅单程接送使用</text>
+            <text>·仅在线支付使用</text>
+          </view>
+          <view catchtap='goback' data-item="{{item}}">点击使用</view>
+          <view>X{{item.count}}</view>
+        </view>
+      </block>
+      <text class='Title' wx:if="{{isShowCardTitle[1]==true}}">商品及服务优惠券</text>
+      <block wx:for="{{item}}" wx:key="{{index}}" wx:if="{{item.type==10||item.type==11||item.type==12||item.type==13}}">
+        <view class='newTicket'>
+          <text>{{item.disPlayPrice}}元</text>
+          <view>
+            <text wx:if="{{item.cardId!=25&&item.cardId!=26}}" style='font-size: 32rpx;'>{{item.shopName}}</text>
+            <text wx:if="{{item.cardId==25||item.cardId==26}}" style='font-size: 32rpx;'>公益</text>
+            <text>·{{item.startDate}}至{{item.endDate}}</text>
+            <text>·{{item.comment}}</text>
+            <text wx:if="{{item.cardId!=25&&item.cardId!=26}}">·仅限{{item.shopName}}使用</text>
+            <text wx:if="{{item.cardId==25||item.cardId==26}}">·仅限公益店铺使用</text>
+            <text wx:if="{{item.type==10}}">·仅商品类使用</text>
+            <text wx:if="{{item.type==11}}">·仅服务类使用</text>
+            <text>·仅在线支付使用</text>
+          </view>
+          <view catchtap='goback' data-item="{{item}}">点击使用</view>
+          <view>X{{item.count}}</view>
+        </view>
+      </block>     
+    </view>
+  </view>
+  <view class='exit' wx:if="{{status==1 || status==2}}" bindtap='exit'>
+    <text>不使用优惠券</text>
+  </view>
+
+  <view class='empty' wx:if="{{item==''}}">
+    <image src='/images/ic_empty_order.png' mode='widthFix'></image>
+    <text>您暂时没有优惠券</text>
+  </view>
+</view>

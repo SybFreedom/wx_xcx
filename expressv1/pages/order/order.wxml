@@ -1,0 +1,185 @@
+<!--pages/discount/discount.wxml-->
+<view class="body">
+  <!--<view class="nav bc_white">
+    <view class="{{selected?'red':'default'}}" bindtap="selected">待接单</view>
+    <view class="{{selected1?'red':'default'}}" bindtap="selected1">未完成</view>
+    <view class="{{selected2?'red':'default'}}" bindtap="selected2">已完成</view>
+  </view>-->
+  <!--待接单  -->
+  <view wx:if='{{statutype==0}}'>
+    <block wx:for="{{orderlist}}" wx:key="{{index}}">
+      <view class='item'>
+        <view>
+          <view>
+            <text>{{item[2]}}</text>
+            <text>宠物主人：{{item[3]}}</text>
+          </view>
+          <text>订单编号:{{item[1]}}</text>
+        </view>
+        <view wx:if="{{item[9]==null}}">
+          <view>
+            <text>单程</text>
+            <text>{{item[4]}}</text>
+          </view>
+          <text>{{item[7]}}</text>
+        </view>
+        <view wx:if="{{item[9]!=null}}">
+          <view>
+            <text>接宠</text>
+            <text>{{item[4]}}</text>
+          </view>
+          <text>{{item[7]}}</text>
+        </view>
+        <view style="{{item[9]!=null?'display:flex':'display:none'}}">
+          <view>
+            <text>送宠</text>
+            <text>{{item[5]}}</text>
+          </view>
+          <text>{{item[9]}}</text>
+        </view>
+        <view>
+          <view>
+            <view style="display:{{item[13]==0?'none':'flex'}}"></view>
+            <text style="display:{{item[13]==0?'none':'flex'}}">跟车</text>
+            <view style="display:{{item[13]==1?'none':'flex'}}"></view>
+            <text style="display:{{item[13]==1?'none':'flex'}}">不跟车</text>
+          </view>
+          <view data-id="{{item[0]}}" bindtap='godetails'>
+            <text>查看订单</text>
+          </view>
+           <view bindtap='acceptOrder' data-index='{{index}}'>
+            <text>接受订单</text>
+          </view>
+        </view>
+      </view>
+      <view class='item_tip' style='display:{{item.show}}'>
+        <text>备注：{{item[10]}}</text>
+      </view>
+    </block>  
+  </view>
+
+  
+
+  <!-- 未完成 -->
+  <view  wx:if='{{statutype==1}}'>
+      <block wx:for="{{orderlist2}}" wx:key="{{index}}">
+      <view class='item'>
+        <view>
+          <view>
+            <text>{{item[3]}}</text>
+            <text>宠物主人：{{item[4]}}</text>
+          </view>
+          <text>订单编号:{{item[1]}}</text>
+        </view>
+        
+        <view wx:if="{{item[10]==null}}">
+          <view>
+            <text>单程</text>
+            <text>{{item[5]}}</text>
+          </view>
+          <text>{{item[8]}}</text>
+        </view>
+        <view wx:if="{{item[10]!=null}}">
+          <view>
+            <text>接宠</text>
+            <text>{{item[5]}}</text>
+          </view>
+          <text>{{item[8]}}</text>
+        </view>
+        <view style="{{item[10]!=null?'display:flex':'display:none'}}">
+          <view>
+            <text>送宠</text>
+            <text>{{item[6]}}</text>
+          </view>
+          <text>{{item[10]}}</text>
+        </view>
+        <view>
+          <view >
+            <view style="display:{{item[14]==0?'none':'flex'}}"></view>
+            <text style="display:{{item[14]==0?'none':'flex'}}">跟车</text>
+            <view style="display:{{item[14]==1?'none':'flex'}}"></view>
+            <text style="display:{{item[14]==1?'none':'flex'}}">不跟车</text>
+          </view>
+          <view data-id="{{item[0]}}" bindtap='godetails'>
+            <text>查看订单</text>
+          </view>
+        </view>
+      </view>
+      <view class='item_tip'>
+        <text>备注：{{item[11]}}</text>
+        <view wx:if='{{item[2]==7}}'>
+          <view style='background-color:#006cff'></view>
+          <text style='color:#006cff'>上门接送</text>
+        </view>
+        <view wx:if='{{item[2]==10}}'>
+          <view style='background-color:#ff6a28'></view>
+          <text style='color:#ff6a28'>已到店面</text>
+        </view>
+        <view wx:if='{{item[2]==11||item[2]==12}}'>
+          <view style='background-color:#cc2ce9'></view>
+          <text style='color:#cc2ce9'>服务中</text>
+        </view>
+        <view wx:if='{{item[2]==13}}'>
+          <view style='background-color:#00ae08'></view>
+          <text style='color:#00ae08'>待接回</text>
+        </view>
+      </view>
+    </block>  
+  </view>
+
+  <!-- 已完成 -->
+  <view wx:if='{{statutype==2}}'>
+    <block wx:for="{{orderlist3}}" wx:key="{{index}}">
+      <view  class='item'>
+        <view>
+          <view>
+            <text>{{item[3]}}</text>
+            <text>宠物主人：{{item[4]}}</text>
+          </view>
+          <text>订单编号:{{item[1]}}</text>
+        </view>
+        <view wx:if="{{item[10]==null}}">
+          <view>
+            <text>单程</text>
+            <text>{{item[5]}}</text>
+          </view>
+          <text>{{item[8]}}</text>
+        </view>
+        <view wx:if="{{item[10]!=null}}">
+          <view>
+            <text>接宠</text>
+            <text>{{item[5]}}</text>
+          </view>
+          <text>{{item[8]}}</text>
+        </view>
+        <view style="{{item[10]!=null?'display:flex':'display:none'}}">
+          <view>
+            <text>送宠</text>
+            <text>{{item[6]}}</text>
+          </view>
+          <text>{{item[10]}}</text>
+        </view>
+        <view>
+          <view>
+            <view style="display:{{item[15]==0?'none':'flex'}}"></view>
+            <text style="display:{{item[15]==0?'none':'flex'}}">跟车</text>
+            <view style="display:{{item[15]==1?'none':'flex'}}"></view>
+            <text style="display:{{item[15]==1?'none':'flex'}}">不跟车</text>
+          </view>
+          <view data-id="{{item[0]}}" bindtap='godetails'>
+            <text>查看订单</text>
+          </view>
+        </view>
+      </view>
+      <view class='item_tip'>
+        <text>备注：{{item[11]}}</text>
+        <view>
+          <view style='background-color:#222'></view>
+          <text style='color:#222'>已完成</text>
+        </view>
+      </view>
+    </block>  
+  </view>
+</view>
+
+

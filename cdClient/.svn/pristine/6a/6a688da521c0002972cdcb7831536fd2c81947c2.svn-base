@@ -1,0 +1,3 @@
+<view>
+  <button bindtap='showmap'>点我打开地图</button>
+</view>

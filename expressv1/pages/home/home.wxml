@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <view class='messageView' bindtap='toMessages'>
+      <image src='/img/message.png'></image>
+      <text>通知</text>
+      <view wx:if="{{messageNum>0}}">{{messageNum}}</view>
+    </view>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="widthFix"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <!--<text class='userinfo-account'>{{account}}</text>-->
+    </block>
+  </view>
+  <view class='order'>
+    <view class='myOrder' bindtap='goorder1'>
+      <image src='../../img/me_03.png' mode='widthFix'></image>
+      <text>可接订单</text>
+      <image src='/img/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+    <view class='myOrder' bindtap='goorder2'>
+      <image src='../../img/me_03.png' mode='widthFix'></image>
+      <text>已接订单</text>
+      <image src='/img/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+    <view class='myOrder' bindtap='goorder3'>
+      <image src='../../img/me_03.png' mode='widthFix'></image>
+      <text>已完成订单</text>
+      <image src='/img/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+    <view class='myOrder' bindtap='goManage' wx:if="{{userType==2}}">
+      <image src='../../img/me_03.png' mode='widthFix'></image>
+      <text>管理界面</text>
+      <image src='/img/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+  </view>
+  <view class='btn'>
+    <button bindtap='exit'>退出登陆</button>
+  </view>
+</view>

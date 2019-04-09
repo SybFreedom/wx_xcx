@@ -1,0 +1,66 @@
+{
+  "pages":[
+    
+    
+    "pages/home/home",
+    "pages/orderDetail/orderDetail",
+    
+    "pages/ency/ency",
+    "pages/encyDetail/encyDetail",
+    
+    "pages/order/order",
+    "pages/my/my",
+    "pages/logs/logs",
+    "pages/bunessList/bunessList",
+    "pages/shop/shop",
+    "pages/submitOrder/submitOrder",
+    "pages/searchBunessList/searchBunessList",
+    "pages/chooseArea/chooseArea",
+    "pages/myShippingAddress/myShippingAddress",
+    "pages/addNewOrEditorAddress/addNewOrEditorAddress",
+    "pages/cancelOrder/cancelOrder",
+    "pages/commentOrder/commentOrder",
+    "pages/msg/mgs_success",
+    "pages/msg/mgs_fail",
+    
+    
+    "pages/serviceDes/serviceDes",
+    "pages/goodsDetail/goodsDetail",
+    "pages/authorization/authorization",
+    "pages/record/record",
+    "pages/balance/balance",
+    "pages/psdetails/psdetails",
+    "pages/contact/contact"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#ffd33a",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#888888",
+    "selectedColor": "#ffd33a",
+    "borderStyle": "666666",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "images/tabbarIcon1.png",
+        "selectedIconPath": "images/tabbarIcon1H.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "iconPath": "images/tabbarIcon2.png",
+        "selectedIconPath": "images/tabbarIcon2H.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/tabbarIcon3.png",
+        "selectedIconPath": "images/tabbarIcon3H.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

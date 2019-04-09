@@ -1,0 +1,236 @@
+page{
+  height: 100%;
+  background-color: #f9f9f9;
+}
+
+
+.topView{
+  display: flex;
+  background-color: #F8D45C;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.topIconView{
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 8px;
+  background-color: white;
+  margin-left: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  width: 21px;
+  
+  border: 1px solid #E7E7E7;
+  border-right: none;
+}
+
+.topSerachView{
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  font-size: 12px;
+  margin-right: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  
+  border: 1px solid #E7E7E7;
+  border-left: none;
+}
+.wx_list_wrap{
+  width: 85%;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.wx_list{
+    box-shadow: 0 0 25rpx rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    background-color: #ffffff;
+    width: 98%;
+    margin: 15rpx 0;
+    border-radius: 5px;
+    height: auto;
+    overflow: hidden;
+}
+.wx_list:last-child{
+    border-bottom:1rpx solid #e0e0e0;
+}
+.item{
+    /*border-bottom:1rpx solid #e0e0e0;*/
+    display: flex;
+    flex-direction: column;
+}
+.item_logo{
+    width: 100%;
+}
+.logo{
+    width: 100%;
+    height: 300rpx;
+    min-height: 300rpx;
+    max-height: 300rpx;
+}
+.item_container{
+    /* height:60px; */
+    /* overflow: hidden; */
+    margin-left:5px;
+     /* width: 40%;  */
+}
+.item_title{
+  font-weight: bold;
+    display: block;
+    margin-left:5px;
+    font-size: 14px;
+    color: black;
+}
+.list_bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.juli{
+  color: #BEBEBE;
+  font-size: 10px;
+}
+
+.item_evalueImg{
+    margin-left:5px;
+    display: inline-block;
+    height:12px;
+    width: 60px;
+}
+
+.item_evalueNumber{
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 5px;
+  color: #FF4900;
+}
+
+.item_salesNumber{
+  font-size: 10px;
+  color: #BEBEBE;
+}
+
+.item_message{
+    display: block;
+    margin-left:5px;
+    height:16px;
+    line-height:16px;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    color: #BEBEBE;
+    font-size: 10px;
+}
+.item_time{
+    position: absolute;
+    right: 10px;
+    text-align: center; 
+    font-size: 11px;
+    color: #fff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #ffd33a;
+    border-radius: 20px;
+}
+.hotsearch{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  
+}
+/* .hotsearch>text:first-of-type{
+  font-size: 14px;
+  color: #747474;
+  text-indent: 1em;
+} */
+.hotsearch>view{
+  width: 94%;
+  padding: 5px 3%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+.hotsearch>view>view{
+  font-size: 12px;
+  background-color: #EDEDED;
+  border-radius: 3px;
+  color: #333;
+  box-sizing: border-box;
+  width: 23%;
+  height: 60rpx;
+  margin: 8rpx 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sort{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: white;
+  padding-bottom: 10rpx
+}
+.sort>view{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding-top: 15rpx;
+}
+.sort>view>text{
+  font-size: 11pt;
+  color: #333;
+}
+.sort>view>image{
+  width: 17rpx;
+  margin-left: 5rpx;
+}
+.more{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.more>image{
+  width: 17rpx;
+  margin-left: 5rpx;
+}
+/* goTop回到顶部图标start  */
+.com-widget-goTop { 
+  position: fixed; 
+  bottom: 50px; 
+  right: 5px; 
+  background: rgba(0,0,0,0.5); 
+  border-radius: 50%; 
+  z-index: 500; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10rpx;
+} 
+.com-widget-goTop>image{
+  width: 60rpx;
+  height: 60rpx;
+}
+.com-widget-goTop .icon-gotop{ 
+  display: inline-block; 
+  width: 50px; 
+  font-size: 12px; 
+  color: #ffffff; 
+  text-align: center; 
+}

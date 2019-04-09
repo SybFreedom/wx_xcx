@@ -1,0 +1,103 @@
+.father{
+  width: 100%;
+}
+/* 头部logo---开始 */
+.father .logo{
+  width: 90%;
+  margin: auto 5%;
+  margin-top: 150rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.father .logo image{
+  width: 220rpx;
+  margin-bottom: 50rpx;
+  border-radius: 10rpx
+}
+.father .logo text{
+  display: block;
+  width: 20%;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ff4242;
+  border-radius: 15px;
+  padding: 10rpx;
+  color: #fff;
+  margin:auto 40%;
+  margin-top: 10rpx;
+}
+/* 头部logo---结束 */
+
+/*中部操作---开始*/
+.father .action{
+  width: 80%;
+  margin: auto 10%;
+  margin-top: 80rpx;
+  float: left;
+}
+.father .action .account{
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10rpx;
+  width: 100%;
+  float: left;
+}
+.father .action .account text{
+  float: left;
+  line-height: 30px;
+  height: 30px;
+  font-size: 16px;
+  color:#4e4e4e;
+}
+.father .action .account input{
+  vertical-align: middle;
+  width: 80%;
+  float: left;
+  margin-left: 30rpx;
+  line-height: 30px;
+  height: 30px;
+  color:#4e4e4e;
+  font-size: 14px;
+}
+.placeholder{
+  color: #999;
+  font-size: 14px;
+}
+/*忘记密码and注册样式---开始*/
+.father .action .reFor{
+  width: 100%;
+  font-size: 14px;
+  color: #4e4e4e;
+  margin-top: 10rpx;
+  float: left;
+}
+.father .action .reFor text:nth-child(2){
+  float: right;
+}
+/*忘记密码and注册样式---结束*/
+
+/*中部操作---结束*/
+
+/* 底部按钮---开始 */
+.father .btn{
+  width: 80%;
+  margin: auto 10%;
+  float: left;
+  margin-top: 60rpx;
+}
+.father .btn button{
+  width: 100%;
+  background-color: #006CFF;
+  border-radius: 25px;
+  border: none;
+  color: #ffffff;
+}
+.father .btn button:last-of-type{
+  background-color: #E7E7E7;
+  color: #383838;
+  margin-top: 20rpx;
+}
+button::after{
+  border: none;
+}
+/* 底部按钮---开始 */

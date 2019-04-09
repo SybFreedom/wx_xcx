@@ -1,0 +1,60 @@
+<view class='containter'>
+  <view class='containterTop'>
+    <view>
+      <text>账户余额</text>
+      <text>￥0.00</text>
+    </view>
+  </view>
+  <view class='containterCenter'>
+    <view class='top'>
+      <view>
+        <text>充值余额</text>
+        <text bindtap='gorecord'>充值明细</text>
+      </view>
+      <view>
+        <input type='number' bindinput='updateprice' placeholder='请输入您要充值的金额' focus='true'></input>
+        <view bindtap='gowxpay' style="background-color:{{status?'#FFD141':'#CECECE'}}">确定</view>
+      </view>
+      <!-- <view>
+        <image src='/images/ic_recharge_discount.png' mode='widthFix'></image>
+        <view>
+          <text>推荐充值</text>
+          <text>活动时间：2018-09-09至2018-10-09</text>
+        </view>
+      </view> -->
+    </view>
+    <!-- <view class='center'>
+      <view>
+        <view>
+          <text>充50元</text>
+          <text>送20元</text>
+        </view>
+        <view>
+          <text>充值</text>
+        </view>
+      </view>
+      <view>
+        <view>
+          <text>充100元</text>
+          <text>送50元</text>
+        </view>
+        <view>
+          <text>充值</text>
+        </view>
+      </view>
+      <view>
+        <view>
+          <text>充200元</text>
+          <text>送150元</text>
+        </view>
+        <view>
+          <text>充值</text>
+        </view>
+      </view>
+    </view> -->
+    <view class='bottom'>
+      <image src='/images/tubiao_03.png' mode='widthFix'></image>
+      <text>充值金额只能用于配送费，不能用于购买商品</text>
+    </view>
+  </view>
+</view>

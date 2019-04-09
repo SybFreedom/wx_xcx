@@ -1,0 +1,241 @@
+var server = require('./utils/server');
+const clientApi = require('./utils/clientApi.js').clientApi;
+var tools = require('./utils/util.js');
+App({
+
+  //通用发送请求
+  apiRequest: function (url, methods, post, cb) {
+    var that = this;
+    wx.request({
+      url: clientApi.URI + url,
+      data: post,
+      method: methods,
+      success: function (res) {
+        if (200 === res.statusCode) {
+          //请求成功
+          'function' === typeof cb && cb(res.data);
+        } else {
+          wx.showToast({
+            title: '系统错误',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail: function (res) {
+        wx.showModal({
+          title: '提示',
+          content: '服务器请求异常，请稍后重试！',
+          showCancel: false
+        });
+      }
+    })
+  },
+
+
+
+	onLaunch: function () {
+//临时登陆凭证
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code',
+            data: {
+              code: res.code
+            }
+          })
+          console.log(res)
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
+
+//临时登陆凭证完结
+
+
+
+    tools.compareV(this);
+		var self = this;
+		var rd_session = wx.getStorageSync('rd_session');
+
+    wx.getSystemInfo({
+      success: (res) => {
+          self.windowHeight = res.windowHeight,
+          self.windowWidth  = res.windowWidth
+      }
+    })
+
+    self.login();
+
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+          wx.reLaunch({
+            url: '../../pages/authorization/authorization',
+          })
+        }
+      }
+    })
+
+    // self.getUserInfoPermissions();
+    
+		// if (!rd_session) {
+			
+		// } else {
+		// 	wx.checkSession({
+		// 		success: function () {
+		// 			// 登录态未过期
+		// 			console.log('登录态未过期')
+		// 			self.rd_session = rd_session;
+		// 			self.getUserInfo();
+		// 		},
+		// 		fail: function () {
+		// 			//登录态过期
+		// 			self.login();
+		// 		}
+		// 	})
+		// }
+	},
+	onShow: function () {
+
+	},
+	onHide: function () {
+
+	},
+
+  getUserInfoPermissions: function (callBack) {
+    var _this = this;
+    wx.getSetting({
+      success(res) {
+        if (!res['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success() {
+              _this.hasLocation = true
+              callBack(0);
+              wx.getSetting({
+                success(res) {
+                  
+                  if (!res['scope.userInfo']) {
+                    wx.authorize({
+                      scope: 'scope.userInfo',
+                      success() {
+                        
+                        _this.hasUserInfo = true
+
+                        if (_this.userId == '' || _this.userId == null){
+                          _this.login(callBack);
+                        } else {
+                          callBack(2);
+                        }
+                        
+                      },
+                      fail() {
+                        callBack(3);
+                        _this.hasUserInfo = false
+                      
+                      }
+                    })
+                  }
+                }
+              })
+
+
+
+            },
+            fail() {
+              callBack(1);
+              _this.hasLocation = false
+             
+            }
+          })
+        }
+      }
+    })
+  },
+
+	globalData: {
+    txMapak:'ITEBZ-NJTKU-DZJVQ-26ESS-D2RJH-MOBQF',
+    ak: 's2PaApqZup9AvsQllOYNOuVVAGralwj5',
+
+    userLocationAddress:{city:'',
+                  provinces:'',
+                  district:'',
+                  name:'',
+                  location:{},
+                  adcode:''
+                  },
+
+    shippingAddress: {
+      userName:'',
+      phone: '',
+      address: '',
+      location: '',
+      id:'',
+      status:'',
+      userId:''
+    },
+    sshippingAddress: {
+      userName: '',
+      phone: '',
+      address: '',
+      location: '',
+      id: '',
+      status: '',
+      userId: ''
+    },
+    
+    temAddress: {
+      customAddress:'',
+      city: '',
+      provinces: '',
+      district: '',
+      name: '',
+      location: {},
+      adcode: ''
+    },
+	},
+  openid:null,
+  appid:'wx601e284d89b5ad6b',  
+  secret: '95bc30c8e25484485b53b998bace1d1c',
+  // 74d91cec97c4787c538c27b68c744663
+	rd_session: null,
+  goodsAttrubuteStr:null,
+  userId:3437,
+  sdkV:'1.2.2',
+  windowHeight:0,
+  windowWidth:0,
+  shareTitle:'宠物上门服务平台',
+  hasLocation:false,
+  hasUserInfo:false,
+  wxPayState: false,
+	login: function(callBack) {
+		var self = this;
+		wx.login({
+			success: function (res) {
+        if (res.code) {
+          self.getUserInfo(callBack,res.code);
+        }
+			}
+		});
+	},
+	getUserInfo: function(callBack,code) {
+		var self = this;
+		wx.getUserInfo({
+			success: function(res) {
+				self.userInfo = res.userInfo;
+        clientApi.bindUser({ 'icon': self.userInfo.avatarUrl, 'name': self.userInfo.nickName,'code':code}).then(e => {
+          self.userId = e.data.id;
+          self.openid = e.data.openId;
+          callBack(2);          
+        })
+			},
+      fail: function (err) {
+        
+      }
+		});
+	}
+})

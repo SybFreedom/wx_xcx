@@ -1,0 +1,73 @@
+<view class='wrap'>
+  <view class="topView">
+    <image class="topIconView" src="../../images/fang.png" mode='widthFix'></image>
+    <input bindinput="bindKeyInput" class="topSerachView" placeholder="搜索{{shopType == 1 ? '商品' : '服务'}}名称" />
+  </view>
+  <view class='sort'>
+    <block wx:for="{{sortText}}" wx:key="{{index}}">
+      <view bindtap='sort' data-index='{{index}}' data-status='{{item.status}}' data-sortname="{{item.sortName}}" data-sort='{{item.sort}}'>
+        <text style="color:{{item.status?'#FE4800':'#222222'}}">{{item.text}}</text>
+        <image src="{{item.pic}}" mode='widthFix'></image>
+      </view>
+    </block>
+  </view>
+  <!-- <view class='hotsearch'>
+    <view>
+      <view wx:for="{{hotsearch}}" wx:if="{{index<num}}" style="background-color:{{index==idx?'#F8D45C':'#EDEDED'}}" data-txt='{{item.title}}' bindtap='hotsearch' wx:key="{{index}}" data-index='{{index}}'>{{item.title}}</view>
+      <view bindtap='showKeyWord' class='more'>
+        <text>更多</text>
+        <image src="{{num==7?'/images/black_down.png':'/images/black_up.png'}}" mode='widthFix'></image>
+      </view>
+    </view>
+  </view> -->
+  <view class='wx_list_wrap' style='width:320rpx;position:absolute;left:40rpx'>
+    <view class="wx_list" wx:for="{{items1}}" wx:key="{{item.itemid}}">
+      <view class="item" data-item="{{item}}" bindtap="bunessItemClick">
+        <view class="item_logo">
+          <image class="logo" src="{{item.icon}}" mode='widthFix'></image>
+        </view>
+        <view class="item_container">
+          <text class="item_title">{{item.name}}</text>
+
+          <text class="item_evalueNumber" wx:if="{{item.discount==0}}">￥{{item.price}}</text>
+
+          <text class="item_evalueNumber" wx:else>￥{{item.price*item.discount/10}}</text>
+
+          <text wx:if="{{item.discount!=0}}" style="text-decoration:line-through; font-size:10pt; color:#666; margin-left:10rpx;">￥{{item.price}}</text>
+
+          <text class="item_salesNumber" style='display:block; margin-left:10rpx;'>销量{{item.sellCount}}单</text>
+        </view>
+        <view class="list_bottom">
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='wx_list_wrap' style='width:320rpx;position:absolute;left:390rpx'>
+    <view class="wx_list" wx:for="{{items2}}" wx:key="{{item.itemid}}">
+      <view class="item" data-item="{{item}}" bindtap="bunessItemClick">
+        <view class="item_logo">
+          <image class="logo" src="{{item.icon}}" mode='widthFix'></image>
+        </view>
+        <view class="item_container">
+          <text class="item_title">{{item.name}}</text>
+
+          <text class="item_evalueNumber" wx:if="{{item.discount==0}}">￥{{item.price}}</text>
+
+          <text class="item_evalueNumber" wx:else>￥{{item.price*item.discount/10}}</text>
+
+          <text wx:if="{{item.discount!=0}}" style="text-decoration:line-through; font-size:10pt; color:#666; margin-left:10rpx;">￥{{item.price}}</text>
+
+          <text class="item_salesNumber" style='display:block; margin-left:10rpx;'>销量{{item.sellCount}}单</text>
+        </view>
+        <view class="list_bottom">
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="com-widget-goTop" bindtap="goTop" wx:if="{{floorstatus}}">
+  <image src='/images/goTop.png'></image>
+  <view class="icon-gotop">
+    顶部
+  </view>
+</view>

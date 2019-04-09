@@ -1,0 +1,89 @@
+.father{
+  width: 100%;
+}
+/* 头部logo---开始 */
+.father .logo{
+  width: 90%;
+  margin: auto 5%;
+  margin-top: 15rpx;
+}
+.father .logo image{
+  width: 410rpx;
+  height: 440rpx;
+  margin-left: 20%;
+}
+.father .logo text{
+  display: block;
+  width: 20%;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ff4242;
+  border-radius: 15px;
+  padding: 10rpx;
+  color: #fff;
+  margin:auto 40%;
+  margin-top: 10rpx;
+}
+/* 头部logo---结束 */
+
+/*中部操作---开始*/
+.father .action{
+  width: 80%;
+  margin: auto 10%;
+  margin-top: 80rpx;
+  float: left;
+}
+.father .action .account{
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  float: left;
+  position: relative;
+}
+.father .action .account text{
+  padding-top: 5rpx;
+  vertical-align: middle;
+  float: left;
+  margin-bottom: 5rpx;
+  color:#4e4e4e;
+}
+.father .action .account input{
+  vertical-align: middle;
+  width: 60%;
+  float: left;
+  margin-left: 30rpx;
+  margin-bottom: 15rpx;
+  color:#4e4e4e;
+  font-size: 14px;
+}
+.father .action .account .btn{
+  display: inline-block;
+  width: 200rpx;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 15px;
+  background-color: #ffd428;
+  position: absolute;
+  right: -32rpx;
+  top: -70rpx;
+}
+.placeholder{
+  color: #4e4e4e;
+  font-size: 14px;
+}
+
+/*中部操作---结束*/
+
+/* 底部按钮---开始 */
+.father .btn{
+  width: 80%;
+  margin: auto 10%;
+  float: left;
+  margin-top: 60rpx;
+}
+.father .btn button{
+  width: 100%;
+  background-color: #ffd428;
+  border-radius: 20px;
+  border: none;
+}
+/* 底部按钮---开始 */

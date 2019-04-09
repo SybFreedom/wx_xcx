@@ -1,0 +1,12 @@
+<image src='https://www.chongdaopet.com/images/20190329124827.png' mode='widthFix'></image>
+<view class='container'>
+  <text>姓名</text>
+  <input placeholder='请输入您的姓名' bindblur='input1'></input>
+  <text>领养类别</text>
+  <input placeholder='请输入你领养的宠物类别  例：广西猎犬'  bindblur='input2'></input>
+  <text>联系方式</text>
+  <input placeholder='请输入你联系方式'  bindblur='input3'></input>
+  <text>所在区域</text>
+  <input placeholder='请输入你目前所在区域'  bindblur='input4'></input>
+</view>
+<view class='subInfos' bindtap='submitInfos'>领取优惠券</view>

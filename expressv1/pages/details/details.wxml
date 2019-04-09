@@ -1,0 +1,173 @@
+<!--pages/discount/discount.wxml-->
+<view class='containter'>
+  <view class='top'>
+    <view>
+      <text>订单编号：{{list.orderNo}}</text>
+    </view>
+    <view wx:for='{{list.goodsList}}'>
+      <text>{{item.goodsName}}</text>
+      <text>x{{item.count}}</text>
+      <text style='display:none'>￥{{item.price}}</text>
+    </view>
+  </view>
+  <view class='sjmessage'>
+    <view>
+      <text>商家信息</text>
+    </view>
+    <view>
+      <text>商家姓名</text>
+      <text>{{list.shopName}}</text>
+    </view>
+    <view bindtap='gotel' data-tel="{{list.tel}}">
+      <view>
+        <text>商家电话</text>
+        <text>{{list.tel}}</text>
+      </view>
+      <image src='/img/tell_03.png' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <text>商家地址</text>
+        <text>{{list.address}}</text>
+      </view>
+      <text bindtap='gomap1'>导航</text>
+    </view>
+  </view>
+  <view class='message' style="{{list.deliver_Add.address!=null?'display:flex':'display:none'}}">
+    <view>
+      <text>接宠信息</text>
+    </view>
+    <view>
+      <text>接宠用户</text>
+      <text>{{list.receive_add.userName}}</text>
+    </view>
+    <view>
+      <text>接宠时间</text>
+      <text>{{list.receiveTime}}</text>
+    </view>
+    <view bindtap='gotel' data-tel="{{list.receive_add.phone}}">
+      <view>
+        <text>接宠电话</text>
+        <text>{{list.receive_add.phone}}</text>
+      </view>
+      <image src='/img/tell_03.png' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <text>接宠地址</text>
+        <text>{{list.receive_add.address}}</text>
+      </view>
+      <text bindtap='gomap2'>导航</text>
+    </view>
+    <view class='detail_tip'>
+        <text>备</text><text>注</text>
+        <view>{{list.note}}</view>
+    </view>
+  </view>
+  <view class='message' style="{{list.deliver_Add.address==null?'display:flex':'display:none'}}">
+    <view>
+      <text>用户信息</text>
+    </view>
+    <view>
+      <text>用户名称</text>
+      <text>{{list.receive_add.userName}}</text>
+    </view>
+    <view>
+      <text>到达时间</text>
+      <text>{{list.receiveTime}}</text>
+    </view>
+    <view bindtap='gotel' data-tel="{{list.receive_add.phone}}">
+      <view>
+        <text>用户电话</text>
+        <text>{{list.receive_add.phone}}</text>
+      </view>
+      <image src='/img/tell_03.png' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <text>用户地址</text>
+        <text>{{list.receive_add.address}}</text>
+      </view>
+      <text bindtap='gomap2'>导航</text>
+    </view>
+    <view class='detail_tip'>
+        <text>备</text><text>注</text>
+        <text>{{list.note}}</text>
+    </view>
+  </view>
+  <view class='message' style="{{list.deliver_Add.address!=null?'display:flex':'display:none'}}">
+    <view>
+      <text>送宠信息</text>
+    </view>
+    <view>
+      <text>送宠用户</text>
+      <text>{{list.deliver_Add.userName}}</text>
+    </view>
+    <view>
+      <text>送宠时间</text>
+      <text>{{list.deliverTime}}</text>
+    </view>
+    <view bindtap='gotel' data-tel="{{list.deliver_Add.phone}}">
+      <view>
+        <text>送宠电话</text>
+        <text>{{list.deliver_Add.phone}}</text>
+      </view>
+      <image src='/img/tell_03.png' mode='widthFix'></image>
+    </view>
+    <view>
+      <view>
+        <text>送宠地址</text>
+        <text>{{list.deliver_Add.address}}</text>
+      </view>
+      <text bindtap='gomap3'>导航</text>
+    </view>
+  </view>
+  <view class='bottom_status' wx-if='{{list.orderStatus!=2}}'>
+    <view>
+      <view>
+        <view>
+          <view class='circle'></view>
+          <text>已到达宠物店</text>
+        </view>
+        <view></view>
+        <view wx-if='{{list.orderStatus==7}}' bindtap='confirm_statu1' style='background-color:#fe4701'>确认</view>
+        <view wx-if='{{list.orderStatus==10||list.orderStatus==13||list.orderStatus==11||list.orderStatus==12||list.orderStatus==3||list.orderStatus==6}}' style='background-color:#636363'>已确认</view>
+      </view>
+      <!--<view wx-if='{{list.statu>7}}' class='bottom_status_time'>
+        <text>完成时间：</text>
+        <text>{{list.time1}}</text>
+      </view>-->
+    </view>
+    <view>
+      <view>
+        <view>
+          <view class='circle' style='background-color:#cc2ec9'></view>
+          <text style='color:#cc2ec9'>接到宠物</text>
+        </view>
+        <view></view>
+        <view wx-if='{{list.orderStatus==12}}' bindtap='confirm_statu2' style='background-color:#fe4701'>确认</view>
+        <view wx-if='{{list.orderStatus==13||list.orderStatus==3||list.orderStatus==6}}' style='background-color:#636363'>已确认</view>
+      </view>
+      <!--<view wx-if='{{list.statu>=3}}' class='bottom_status_time'>
+        <text>完成时间：</text>
+        <text>{{list.time2}}</text>
+      </view>-->
+    </view>
+    <view>
+      <view>
+        <view>
+          <view class='circle' style='background-color:#01ad09'></view>
+          <text style='color:#01ad09'>已送回宠物</text>
+        </view>
+        <view></view>
+        <view wx-if='{{list.orderStatus==13}}' bindtap='confirm_statu3' style='background-color:#fe4701'>确认</view>
+        <view wx-if='{{list.orderStatus==3||list.orderStatus==6}}' style='background-color:#636363'>已确认</view>
+      </view>
+      <!--<view wx-if='{{list.statu>=4}}' class='bottom_status_time'>
+        <text>完成时间：</text>
+        <text>{{list.time3}}</text>
+      </view>-->
+    </view>
+  </view>
+</view>
+  

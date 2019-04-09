@@ -1,0 +1,6 @@
+<!--pages/serviceDes/serviceDes.wxml-->
+<view class="container" wx:for="{{list}}" wx:key="{{index}}" wx:for-item="QItem">
+     <view class="QView">{{QItem.Q}}</view>
+     <view class="ASView" wx:for="{{QItem.content}}" wx:key="{{index}}" wx:for-item="ASItem">{{ASItem}}
+      </view>
+</view>

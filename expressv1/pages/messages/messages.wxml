@@ -1,0 +1,11 @@
+
+<view class='messageLine' bindtap='toDetail' wx:for="{{messageList}}" wx-item="{{item}}" data-id="{{item.id}}" data-content="{{item.content}}" data-index="{{index}}">
+  <view style="color:{{item.status==0?'#000':'#999'}}">{{item.title}}</view>
+  <view style="color:{{item.status==0?'#000':'#999'}}">{{item.content}}</view>
+  <view>{{item.createdate}}</view>
+  <view wx:if="{{item.status==0}}">新！</view>
+  <text wx:if="{{item.createby==0}}" style="color:{{item.status==0?'#000':'#999'}}">发件人：系统</text>
+  <text wx:if="{{item.createby==1}}" style="color:{{item.status==0?'#000':'#999'}}">发件人：市场部</text>
+  <text wx:if="{{item.createby==2}}" style="color:{{item.status==0?'#000':'#999'}}">发件人：管理员</text>
+  <text wx:if="{{item.createby==3}}" style="color:{{item.status==0?'#000':'#999'}}">发件人：区域管理员</text>
+</view>

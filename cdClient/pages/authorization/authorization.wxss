@@ -1,0 +1,14 @@
+/* pages/authorization/authorization.wxss */
+/* page{
+  height: 100%;
+}
+.containter{
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.containter>button{
+  width: 50%;
+} */

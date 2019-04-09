@@ -1,0 +1,29 @@
+
+<view class='wrap'>
+  <view class='hotsearch'>
+    <view>
+      <view wx:for="{{hotsearch}}" data-txt='{{item}}' bindtap='hotsearch' wx:key="{{index}}">{{item}}</view>
+    </view>
+  </view>
+
+
+<view class='wx_list_wrap'>   
+<view class="wx_list" wx:for="{{items}}" wx:key="{{item.itemid}}" >
+         <view class="item" data-item="{{item}}" bindtap="bunessItemClick">
+                <view class="item_logo">
+                    <image class="logo" src="{{item.logo}}" mode='widthFix'></image> 
+                </view>
+                <view class="item_container">
+                    <text class="item_title">{{item.name}}</text>
+                    <text class="item_evalueNumber">综合评分:  {{item.grade}}</text>
+                </view>
+                <view class="list_bottom">
+                    <text class="item_message">配送费:{{item.servicePrice}}元</text>
+                    <text class="item_salesNumber">月售{{item.orderCount}}单</text>
+                    
+                    <text class="juli">{{item.distance}}</text>
+                </view>
+            </view>
+    </view>
+</view>     
+</view>    

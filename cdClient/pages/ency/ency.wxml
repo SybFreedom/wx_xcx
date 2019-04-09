@@ -1,0 +1,11 @@
+<view class='containter'>
+  <image src='/images/baike_02.jpg' mode='widthFix'></image>
+  <view class='list'>
+    <block wx:for="{{list}}" wx:key="{{index}}">
+      <view bindtap='goencyDetail' data-item="{{item}}">
+        <text>{{item[1]}}</text>
+        <text>{{item[2]}}</text>
+      </view>
+    </block>
+  </view>
+</view>

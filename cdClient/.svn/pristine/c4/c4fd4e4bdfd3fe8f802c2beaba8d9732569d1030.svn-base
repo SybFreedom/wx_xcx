@@ -1,0 +1,15 @@
+<view class='containter'>
+  <view class='list'>
+    <block wx:for="{{list}}" wx:key="{{index}}">
+      <view>
+        <view>
+          <text>{{item.name}}</text>
+          <text>{{item.time}}</text>
+        </view>
+        <view>
+          <text>+{{item.price}}</text>
+        </view>
+      </view>
+    </block>  
+  </view>
+</view>

@@ -1,0 +1,41 @@
+<!--pages/addNewOrEditorAddress/addNewOrEditorAddress.wxml-->
+
+<view class="chooseView">
+  <view class="itemView">
+    <view class="leftView" id="telName">联系人</view>
+    <input bindinput="telName" value="{{name}}" class="addressView" placeholder="收货人姓名" />
+  </view>
+  <view class="cutView"></view>
+
+  <view class="itemView">
+    <view class="leftView">联系电话</view>
+    <input bindinput="tel" value="{{tel}}" class="addressView" placeholder="收货人电话" />
+  </view>
+  <view class="cutView"></view>
+
+  <view class="itemView">
+    <view class="leftView">收货地址</view>
+    <input bindinput="address" bindfocus="pushChooseAddress" class="addressView" placeholder="小区/写字楼/学校等" value="{{address}}" />
+
+
+  </view>
+  <view class="cutView"></view>
+
+  <view class="itemView">
+    <view class="leftView">详情地址</view>
+    <input bindinput="detailAddress" value="{{detailAddress}}" class="addressView" placeholder="门牌号等" />
+  </view>
+  <view class="cutView"></view>
+  <view class="itemView">
+    <view class="leftView" style='flex:1'>设置为默认地址</view>
+    <switch bindchange='switchTap' checked='{{switchStatu}}' style=''></switch>
+  </view>
+</view>
+
+
+<button wx:if="{{addressId == ''}}" bindtap="commit" data-actionType="0" class="commitBt">确定新增</button>
+
+<view class="changeAddress" wx:if="{{addressId != ''}}">
+  <button bindtap="deleteAddress" data-actionType="2" class="deleteBt">删除地址</button>
+  <button bindtap="updateAddress" data-actionType="1" class="soureBt">确定修改</button>
+</view>

@@ -1,0 +1,46 @@
+<view class='containter'>
+  <view class='content'>
+    <view class='content_top'>
+      <view>
+        <image src='/images/card_back_03.png' mode='widthFix'></image>
+        <view>
+          <image src='/images/logo_03.png' mode='widthFix'></image>
+          <text>{{item[5]}}</text>
+        </view>
+        <view bindtap='gohome'>
+          <text>用券买单</text>
+        </view>
+      </view>
+      <view>
+        <text>使用条件：{{item[3]}}</text>
+        <text>可用时间：{{item[6]}}——{{item[7]}}</text>
+      </view>  
+    </view>
+    <view class='content_bottom' bindtap='goCardDetails'>
+      <image src='/images/detail_back.png' mode='widthFix'></image>
+      <view>
+        <text>{{item[5]}}</text>
+        <text>></text>
+      </view>
+    </view>
+
+  </view>
+  <!-- <view class='wrap'>
+    <text>{{item[3]}}</text>
+    <view bindtap='gohome'>
+      <text>用券买单</text>
+    </view>
+    <view>
+      <text>使用条件：{{item[3]}}</text>
+      <text>使用时间：{{item[4]}}——{{item[5]}}</text>
+    </view>
+    <!-- <view>
+      <text>赠送朋友</text>
+      <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+    </view> -->
+    <!-- <view>
+      <text>公众号</text>
+      <image src='/images/orderIcon_16.png' mode='widthFix'></image>
+    </view>
+  </view> -->
+</view>

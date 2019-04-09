@@ -1,0 +1,75 @@
+//index.js
+//获取应用实例
+var app = getApp()
+Page({
+  data: {
+    motto: 'Hello World',
+    userInfo: {},
+    price:0,  //充值金额
+    status:false,
+  },
+  //事件处理函数
+  bindViewTap: function() {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
+  },
+  onLoad: function () {
+    console.log('onLoad')
+    var that = this
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function(userInfo){
+      //更新数据
+      that.setData({
+        userInfo:userInfo
+      })
+    })
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: app.shareTitle,
+      imageUrl: '../../images/share_icon.jpg'
+    }
+  },
+  //输入充值金额
+  updateprice:function(e){
+    if (e.detail.value.length>0){
+      this.setData({
+        status:true
+      })
+    }else{
+      this.setData({
+        status: false
+      })
+    }
+    this.setData({
+      price:e.detail.value
+    });
+  },
+  //发起支付
+  gowxpay:function(e){
+    if(this.data.price<=0){  //如果输入的金额小于等于0则提示
+      wx.showModal({
+        title: '提示',
+        content: '请输入充值金额',
+      })
+    }else{
+      wx.showModal({
+        title: '充值金额',
+        content: this.data.price,
+      })
+    }
+    
+  },
+  //跳转到充值明细
+  gorecord:function(e){
+    wx.navigateTo({
+      url: '/pages/record/record',
+    })
+  }
+  
+})
